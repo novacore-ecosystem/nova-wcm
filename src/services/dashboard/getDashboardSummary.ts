@@ -41,7 +41,7 @@ export async function getRecentActivity(): Promise<RecentActivityItem[]> {
     {
       id: "act-1",
       kind: "article",
-      title: "5 mẹo chăm sóc da mùa hanh khô",
+      title: "5 mẹo giữ nhà cửa gọn gàng mùa mưa",
       detail: "Xuất bản bởi Minh Anh",
       updatedAt: "2026-08-16T09:20:00+07:00",
     },
