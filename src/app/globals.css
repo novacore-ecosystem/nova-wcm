@@ -1,0 +1,5 @@
+/* Utilities only — Preflight/base and every vendored component's own styles already come
+   from `@novacore/frontend-next-shadcn/styles.css` (imported first in layout.tsx). This
+   file exists solely so Tailwind utility classes written in `src/**` (this app's own
+   code) actually get compiled — see tailwind.config.ts for why. */
+@tailwind utilities;

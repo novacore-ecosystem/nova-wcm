@@ -1,0 +1,46 @@
+{
+  "name": "@novacore/nova-wcm",
+  "version": "0.1.0",
+  "private": true,
+  "description": "NovaCore Business / Landing Admin — website content, catalog, media, and SEO management for small business and landing-page sites.",
+  "type": "module",
+  "packageManager": "yarn@4.17.1+sha512.ccbfabf7d7b6b32075088be9386fb9a2e00bb6887ef07fa56effabc890a56d53da1ccc4128d62db245fcbd3961b236d75335bdf7d5320ed6eafb7588b7ad4697",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^5.7.1",
+    "@novacore/frontend-foundation": "file:../common/frontend-foundation",
+    "@novacore/frontend-next-shadcn": "file:../common/frontend-nextjs/packages/shadcn",
+    "@tanstack/react-query": "^5.65.0",
+    "lucide-react": "^0.475.0",
+    "next": "^15.1.6",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-hook-form": "^7.85.0",
+    "zod": "^4.4.3",
+    "zustand": "^5.0.3"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.2.0",
+    "@types/node": "^22.10.7",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "autoprefixer": "^10.4.20",
+    "eslint": "^9.19.0",
+    "eslint-config-next": "^15.1.6",
+    "eslint-config-prettier": "^9.1.0",
+    "postcss": "^8.5.1",
+    "prettier": "^3.9.0",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.7.3"
+  }
+}
