@@ -111,10 +111,13 @@ dictionary pattern, `useSessionStore`/`useLocaleStore` zustand pattern, `shared/
 
 Amber/orange theme + own `globals.css`/`tailwind.config.ts` (mirrors nova-console's, not modified
 in the shared package) · own `APP_DICTIONARY` (en/vi/zh-CN) for every WCM-specific string · mock
-data layer (does not exist anywhere shared — WCM-only) · SEO preview/health components (app-level;
-generic enough to justify only if a second app needs them later — not promoted to shared now) ·
-Article editor (rich text + SEO panel composition is domain-specific to this product) · dashboard
-content-health cards.
+data layer (does not exist anywhere shared — WCM-only) · SEO search-result-preview components
+(app-level, one per module that needs it — Article and Website SEO each have their own small,
+non-generic version; not promoted to shared since no second app needs it yet) · Article editor's
+Basic Info/Content/Classification/SEO/Publishing section layout and its markdown-lite
+write/preview content editor (a small dependency-free block renderer — headings/lists/paragraphs,
+no `dangerouslySetInnerHTML` — since no rich-text component exists in the shared package and a
+real WYSIWYG dependency wasn't justified for this scope) · dashboard content-health cards.
 
 ## 14. Deferred (intentionally not built now)
 
