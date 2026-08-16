@@ -1,0 +1,91 @@
+import { createMockCollection } from "@/shared/lib/mock/mockCollection";
+import type { ProductCategory } from "@/services/product-category/types";
+
+const SEED: ProductCategory[] = [
+  {
+    id: "cat-living-room",
+    name: "Nội thất phòng khách",
+    slug: "noi-that-phong-khach",
+    description: "Sofa, bàn trà và các món đồ trang trí không gian tiếp khách.",
+    status: "active",
+    productCount: 3,
+    updatedAt: "2026-08-15T09:10:00+07:00",
+  },
+  {
+    id: "cat-bedroom",
+    name: "Nội thất phòng ngủ",
+    slug: "noi-that-phong-ngu",
+    description: "Giường, tủ quần áo và phụ kiện giúp phòng ngủ ấm cúng hơn.",
+    status: "active",
+    productCount: 3,
+    updatedAt: "2026-08-14T14:25:00+07:00",
+  },
+  {
+    id: "cat-home-office",
+    name: "Bàn ghế văn phòng tại nhà",
+    slug: "ban-ghe-van-phong-tai-nha",
+    description: "Giải pháp làm việc tại nhà thoải mái và gọn gàng.",
+    status: "active",
+    productCount: 2,
+    updatedAt: "2026-08-13T11:00:00+07:00",
+  },
+  {
+    id: "cat-kitchen",
+    name: "Đồ gia dụng nhà bếp",
+    slug: "do-gia-dung-nha-bep",
+    description: "Dụng cụ nấu nướng và thiết bị nhỏ cho gian bếp hiện đại.",
+    status: "active",
+    productCount: 2,
+    updatedAt: "2026-08-12T16:40:00+07:00",
+  },
+  {
+    id: "cat-lighting",
+    name: "Đèn trang trí & chiếu sáng",
+    slug: "den-trang-tri-chieu-sang",
+    description: "Đèn bàn, đèn sàn và đèn trang trí cho mọi không gian.",
+    status: "active",
+    productCount: 3,
+    updatedAt: "2026-08-11T08:50:00+07:00",
+  },
+  {
+    id: "cat-decor-accessories",
+    name: "Phụ kiện trang trí nhà",
+    slug: "phu-kien-trang-tri-nha",
+    description: "Gương, bình hoa và các món đồ trang trí nhỏ xinh.",
+    status: "active",
+    productCount: 2,
+    updatedAt: "2026-08-10T10:15:00+07:00",
+  },
+  {
+    id: "cat-rugs-curtains",
+    name: "Thảm & rèm cửa",
+    slug: "tham-va-rem-cua",
+    description: "Thảm trải sàn và rèm cửa giúp căn phòng thêm ấm áp.",
+    status: "active",
+    productCount: 2,
+    updatedAt: "2026-08-09T13:30:00+07:00",
+  },
+  {
+    id: "cat-storage",
+    name: "Kệ & tủ lưu trữ",
+    slug: "ke-va-tu-luu-tru",
+    description: "Giải pháp lưu trữ gọn gàng cho nhà và văn phòng.",
+    status: "active",
+    productCount: 2,
+    updatedAt: "2026-08-08T09:45:00+07:00",
+  },
+  {
+    id: "cat-garden",
+    name: "Trang trí sân vườn",
+    slug: "trang-tri-san-vuon",
+    description: "Chậu cây và phụ kiện trang trí không gian ngoài trời.",
+    status: "inactive",
+    productCount: 1,
+    updatedAt: "2026-07-30T15:20:00+07:00",
+  },
+];
+
+export const productCategoryCollection = createMockCollection(SEED, {
+  entityName: "ProductCategory",
+  keywordFields: ["name", "slug"],
+});
