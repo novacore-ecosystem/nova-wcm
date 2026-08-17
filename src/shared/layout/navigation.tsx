@@ -14,6 +14,7 @@ import {
   KeyRound,
   Users,
   Network,
+  UserCog,
 } from "lucide-react";
 import { Permissions } from "@novacore/frontend-foundation";
 import { createAccessControlNavigation, type NavigationGroup } from "@novacore/frontend-next-shadcn";
@@ -25,14 +26,16 @@ const ACCESS_CONTROL_ICONS: Record<string, ReactNode> = {
   "access-control-permissions": <KeyRound className="h-4 w-4" />,
   "access-control-roles": <Users className="h-4 w-4" />,
   "access-control-positions": <Network className="h-4 w-4" />,
+  "access-control-user-permissions": <UserCog className="h-4 w-4" />,
 };
 
 /**
- * Built from the shared package's `createAccessControlNavigation` (section 8/15 of the shared
- * module's docs) rather than hand-defined — its three entries are already gated on the real
- * backend permission keys (`AccessControlPermissions.permission/role/position.view`), not
- * `Permissions.Root` like the rest of this file (see the module's doc comment on why Position's
- * keys are forward-looking placeholders). Only `collapsible` + icons are WCM-owned additions.
+ * Built from the shared package's `createAccessControlNavigation` rather than hand-defined —
+ * its four entries are already gated on the real backend permission keys
+ * (`AccessControlPermissions.permission/role/position.view`, `permission.manage` for User
+ * Permissions), not `Permissions.Root` like the rest of this file (see the module's doc comment
+ * on why Position's keys are forward-looking placeholders). Only `collapsible` + icons are
+ * WCM-owned additions.
  */
 const baseAccessControlGroup = createAccessControlNavigation("/access-control");
 const accessControlGroup: NavigationGroup = {
