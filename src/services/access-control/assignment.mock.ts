@@ -1,4 +1,3 @@
-import { Permissions } from "@novacore/frontend-foundation";
 import type { AccessControlSubjectType } from "@novacore/frontend-next-shadcn";
 
 import { simulateLatency } from "@/shared/lib/mock/simulateLatency";
@@ -9,18 +8,62 @@ function key(subjectType: AccessControlSubjectType, subjectId: string): string {
 
 /**
  * Seeded to line up with the role/position ids in `role.mock.ts`/`position.mock.ts` — kept here
- * rather than in those files to avoid a circular import (both would need this store).
+ * rather than in those files to avoid a circular import (both would need this store). Permission
+ * ids are plain string literals, not imported from `features/access-control/wcm-permissions.ts`
+ * — `services/` is the mock-backend layer and must not depend on `features/` (the adapter layer
+ * that consumes it), matching every other `services/*.mock.ts` in this app. Keep these in sync
+ * with `wcmPermissionDefinitions` by hand; there are only 16 ids.
  */
 const assignments = new Map<string, string[]>([
-  [key("role", "role-admin"), [Permissions.Root]],
-  [key("role", "role-content-editor"), [Permissions.Notification.View, Permissions.Notification.Manage, Permissions.Audit.View]],
-  [key("role", "role-catalog-manager"), [Permissions.Product.Manage, Permissions.Product.Reindex, Permissions.Inventory.View]],
-  [key("role", "role-viewer"), [Permissions.Audit.View, Permissions.Order.View]],
-  [key("position", "pos-giam-doc"), [Permissions.Root]],
-  [key("position", "pos-truong-phong-noi-dung"), [Permissions.Notification.Manage, Permissions.Audit.View]],
-  [key("position", "pos-truong-phong-kinh-doanh"), [Permissions.Order.Manage, Permissions.Product.Manage]],
-  [key("position", "pos-bien-tap-vien"), [Permissions.Notification.View]],
-  [key("position", "pos-nhan-vien-ban-hang"), [Permissions.Order.View]],
+  [
+    key("role", "role-admin"),
+    [
+      "content:view",
+      "content:manage",
+      "catalog:view",
+      "catalog:manage",
+      "media:view",
+      "media:manage",
+      "website:view",
+      "website:manage",
+      "settings:view",
+      "settings:manage",
+      "permission:view",
+      "permission:manage",
+      "role:view",
+      "role:manage",
+      "position:view",
+      "position:manage",
+    ],
+  ],
+  [key("role", "role-content-editor"), ["content:view", "content:manage", "media:view", "media:manage"]],
+  [key("role", "role-catalog-manager"), ["catalog:view", "catalog:manage"]],
+  [key("role", "role-viewer"), ["content:view", "catalog:view", "media:view", "website:view", "settings:view"]],
+  [
+    key("position", "pos-giam-doc"),
+    [
+      "content:view",
+      "content:manage",
+      "catalog:view",
+      "catalog:manage",
+      "media:view",
+      "media:manage",
+      "website:view",
+      "website:manage",
+      "settings:view",
+      "settings:manage",
+      "permission:view",
+      "permission:manage",
+      "role:view",
+      "role:manage",
+      "position:view",
+      "position:manage",
+    ],
+  ],
+  [key("position", "pos-truong-phong-noi-dung"), ["content:view", "content:manage", "media:view", "media:manage", "role:view"]],
+  [key("position", "pos-truong-phong-kinh-doanh"), ["catalog:view", "catalog:manage", "website:view"]],
+  [key("position", "pos-bien-tap-vien"), ["content:view", "media:view"]],
+  [key("position", "pos-nhan-vien-ban-hang"), ["catalog:view"]],
 ]);
 
 export const permissionAssignmentStore = {

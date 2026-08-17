@@ -31,6 +31,31 @@ export const APP_DICTIONARY: Record<string, TranslationDictionary> = {
       settingsGeneral: "General",
       settingsSocial: "Social links",
     },
+    accessControlCatalog: {
+      groups: {
+        content: "Content",
+        catalog: "Catalog",
+        media: "Media",
+        website: "Website",
+        settings: "Settings",
+        accessControl: "Access Control",
+      },
+      permissions: {
+        content: { view: "View content", manage: "Manage content" },
+        catalog: { view: "View catalog", manage: "Manage catalog" },
+        media: { view: "View media", manage: "Manage media" },
+        website: { view: "View website", manage: "Manage website" },
+        settings: { view: "View settings", manage: "Manage settings" },
+        accessControl: {
+          permissionView: "View permissions",
+          permissionManage: "Manage permission assignments",
+          roleView: "View roles",
+          roleManage: "Manage roles",
+          positionView: "View positions",
+          positionManage: "Manage positions",
+        },
+      },
+    },
   },
   vi: {
     app: {
@@ -57,6 +82,31 @@ export const APP_DICTIONARY: Record<string, TranslationDictionary> = {
       settingsGeneral: "Chung",
       settingsSocial: "Mạng xã hội",
     },
+    accessControlCatalog: {
+      groups: {
+        content: "Nội dung",
+        catalog: "Danh mục sản phẩm",
+        media: "Thư viện ảnh",
+        website: "Website",
+        settings: "Cài đặt",
+        accessControl: "Kiểm soát truy cập",
+      },
+      permissions: {
+        content: { view: "Xem nội dung", manage: "Quản lý nội dung" },
+        catalog: { view: "Xem danh mục sản phẩm", manage: "Quản lý danh mục sản phẩm" },
+        media: { view: "Xem thư viện ảnh", manage: "Quản lý thư viện ảnh" },
+        website: { view: "Xem website", manage: "Quản lý website" },
+        settings: { view: "Xem cài đặt", manage: "Quản lý cài đặt" },
+        accessControl: {
+          permissionView: "Xem quyền hạn",
+          permissionManage: "Quản lý việc gán quyền hạn",
+          roleView: "Xem vai trò",
+          roleManage: "Quản lý vai trò",
+          positionView: "Xem vị trí",
+          positionManage: "Quản lý vị trí",
+        },
+      },
+    },
   },
   "zh-CN": {
     app: {
@@ -82,6 +132,31 @@ export const APP_DICTIONARY: Record<string, TranslationDictionary> = {
       settings: "设置",
       settingsGeneral: "通用",
       settingsSocial: "社交链接",
+    },
+    accessControlCatalog: {
+      groups: {
+        content: "内容",
+        catalog: "产品目录",
+        media: "媒体库",
+        website: "网站",
+        settings: "设置",
+        accessControl: "访问控制",
+      },
+      permissions: {
+        content: { view: "查看内容", manage: "管理内容" },
+        catalog: { view: "查看产品目录", manage: "管理产品目录" },
+        media: { view: "查看媒体库", manage: "管理媒体库" },
+        website: { view: "查看网站", manage: "管理网站" },
+        settings: { view: "查看设置", manage: "管理设置" },
+        accessControl: {
+          permissionView: "查看权限",
+          permissionManage: "管理权限分配",
+          roleView: "查看角色",
+          roleManage: "管理角色",
+          positionView: "查看职位",
+          positionManage: "管理职位",
+        },
+      },
     },
   },
 };
