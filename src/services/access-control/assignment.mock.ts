@@ -64,6 +64,10 @@ const assignments = new Map<string, string[]>([
   [key("position", "pos-truong-phong-kinh-doanh"), ["catalog:view", "catalog:manage", "website:view"]],
   [key("position", "pos-bien-tap-vien"), ["content:view", "media:view"]],
   [key("position", "pos-nhan-vien-ban-hang"), ["catalog:view"]],
+  // A couple of direct user grants, so User Permission Assignment's single-select path has
+  // something pre-checked to demonstrate — ids match `subject.mock.ts`.
+  [key("user", "subj-002"), ["content:view", "content:manage"]],
+  [key("user", "subj-007"), ["catalog:view"]],
 ]);
 
 export const permissionAssignmentStore = {
