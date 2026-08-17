@@ -701,9 +701,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@novacore/frontend-foundation@file:../../../frontend-foundation::locator=%40novacore%2Ffrontend-next-shadcn%40file%3A..%2Fcommon%2Ffrontend-nextjs%2Fpackages%2Fshadcn%23..%2Fcommon%2Ffrontend-nextjs%2Fpackages%2Fshadcn%3A%3Ahash%3D7d518a%26locator%3D%2540novacore%252Fnova-wcm%2540workspace%253A.":
+"@novacore/frontend-foundation@file:../../../frontend-foundation::locator=%40novacore%2Ffrontend-next-shadcn%40file%3A..%2Fcommon%2Ffrontend-nextjs%2Fpackages%2Fshadcn%23..%2Fcommon%2Ffrontend-nextjs%2Fpackages%2Fshadcn%3A%3Ahash%3D9166e6%26locator%3D%2540novacore%252Fnova-wcm%2540workspace%253A.":
   version: 0.1.0
-  resolution: "@novacore/frontend-foundation@file:../../../frontend-foundation#../../../frontend-foundation::hash=2f5309&locator=%40novacore%2Ffrontend-next-shadcn%40file%3A..%2Fcommon%2Ffrontend-nextjs%2Fpackages%2Fshadcn%23..%2Fcommon%2Ffrontend-nextjs%2Fpackages%2Fshadcn%3A%3Ahash%3D7d518a%26locator%3D%2540novacore%252Fnova-wcm%2540workspace%253A."
+  resolution: "@novacore/frontend-foundation@file:../../../frontend-foundation#../../../frontend-foundation::hash=2f5309&locator=%40novacore%2Ffrontend-next-shadcn%40file%3A..%2Fcommon%2Ffrontend-nextjs%2Fpackages%2Fshadcn%23..%2Fcommon%2Ffrontend-nextjs%2Fpackages%2Fshadcn%3A%3Ahash%3D9166e6%26locator%3D%2540novacore%252Fnova-wcm%2540workspace%253A."
   dependencies:
     "@microsoft/signalr": "npm:^8.0.7"
     axios: "npm:^1.7.9"
@@ -725,7 +725,7 @@ __metadata:
 
 "@novacore/frontend-next-shadcn@file:../common/frontend-nextjs/packages/shadcn::locator=%40novacore%2Fnova-wcm%40workspace%3A.":
   version: 0.1.0
-  resolution: "@novacore/frontend-next-shadcn@file:../common/frontend-nextjs/packages/shadcn#../common/frontend-nextjs/packages/shadcn::hash=7d518a&locator=%40novacore%2Fnova-wcm%40workspace%3A."
+  resolution: "@novacore/frontend-next-shadcn@file:../common/frontend-nextjs/packages/shadcn#../common/frontend-nextjs/packages/shadcn::hash=9166e6&locator=%40novacore%2Fnova-wcm%40workspace%3A."
   dependencies:
     "@novacore/frontend-foundation": "file:../../../frontend-foundation"
     "@radix-ui/react-avatar": "npm:^1.1.2"
@@ -751,7 +751,7 @@ __metadata:
     next: ^14.0.0 || ^15.0.0
     react: ^18.3.0 || ^19.0.0
     react-dom: ^18.3.0 || ^19.0.0
-  checksum: 10c0/714ab06c3968b8cf5a653b3c8fae37d49043fcd9e67acce36578cee725187df1573c4552e3c94d0e40730906b8d47fe11144a90c66b2742e52084bd92f8a7423
+  checksum: 10c0/50eb7e043e39c2ce0c31f42399e7825ec85d0950a527eab695d82c15cbfca8392638fe7b306b8902e7d76c3db4c2d0367ce6942928a9286b8f30017813d5633b
   languageName: node
   linkType: hard
 

@@ -10,6 +10,9 @@ interface SessionState {
   setUnauthenticated: () => void;
 }
 
+/** Stable reference for "no user yet" — a fresh `[]` literal in a selector's fallback gives `useSyncExternalStore` a new identity every render, which can trigger an infinite update loop. */
+export const NO_PERMISSIONS: string[] = [];
+
 /**
  * The one deliberate exception to "server state lives in Query, not Zustand" — written only by
  * the session bootstrap query and the login/logout mutations (features/auth/api/auth.queries.ts).

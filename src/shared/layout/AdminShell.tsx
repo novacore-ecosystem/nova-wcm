@@ -21,7 +21,7 @@ import type { Locale } from "@novacore/frontend-foundation";
 import packageJson from "../../../package.json";
 import { navigationConfig } from "@/shared/layout/navigation";
 import { useSidebarPreferences } from "@/shared/layout/useSidebarPreferences";
-import { useSessionStore } from "@/shared/stores/session.store";
+import { NO_PERMISSIONS, useSessionStore } from "@/shared/stores/session.store";
 import { useLogoutMutation } from "@/features/auth";
 import { useAppTranslation, useLocale } from "@/shared/i18n";
 
@@ -119,7 +119,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
   const router = useRouter();
   const { t } = useAppTranslation();
   const user = useSessionStore((state) => state.user);
-  const ownedPermissions = useSessionStore((state) => state.user?.permissions ?? []);
+  const ownedPermissions = user?.permissions ?? NO_PERMISSIONS;
   const logoutMutation = useLogoutMutation();
   const commandPalette = useCommandPalette();
   const sidebarPreferences = useSidebarPreferences();

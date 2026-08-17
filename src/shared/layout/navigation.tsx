@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import {
   LayoutDashboard,
   Package,
@@ -10,11 +11,35 @@ import {
   Search,
   Settings,
   Share2,
+  KeyRound,
+  Users,
+  Network,
 } from "lucide-react";
 import { Permissions } from "@novacore/frontend-foundation";
-import type { NavigationGroup } from "@novacore/frontend-next-shadcn";
+import { createAccessControlNavigation, type NavigationGroup } from "@novacore/frontend-next-shadcn";
 
 export type NavigationConfig = NavigationGroup[];
+
+/** Icons for the shared Access Control module's nav entries — item ids are fixed by `createAccessControlNavigation`. */
+const ACCESS_CONTROL_ICONS: Record<string, ReactNode> = {
+  "access-control-permissions": <KeyRound className="h-4 w-4" />,
+  "access-control-roles": <Users className="h-4 w-4" />,
+  "access-control-positions": <Network className="h-4 w-4" />,
+};
+
+/**
+ * Built from the shared package's `createAccessControlNavigation` (section 8/15 of the shared
+ * module's docs) rather than hand-defined — its three entries are already gated on the real
+ * backend permission keys (`AccessControlPermissions.permission/role/position.view`), not
+ * `Permissions.Root` like the rest of this file (see the module's doc comment on why Position's
+ * keys are forward-looking placeholders). Only `collapsible` + icons are WCM-owned additions.
+ */
+const baseAccessControlGroup = createAccessControlNavigation("/access-control");
+const accessControlGroup: NavigationGroup = {
+  ...baseAccessControlGroup,
+  collapsible: true,
+  items: baseAccessControlGroup.items.map((item) => ({ ...item, icon: ACCESS_CONTROL_ICONS[item.id] })),
+};
 
 /**
  * Gated on `Permissions.Root` throughout — no granular WCM permission keys exist in the shared
@@ -82,6 +107,7 @@ export const navigationConfig: NavigationConfig = [
       { id: "seo", label: "SEO", href: "/website/seo", permission: Permissions.Root, icon: <Search className="h-4 w-4" /> },
     ],
   },
+  accessControlGroup,
   {
     id: "settings-group",
     title: "Settings",
