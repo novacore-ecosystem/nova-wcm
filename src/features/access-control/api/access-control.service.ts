@@ -13,6 +13,7 @@ import {
 import {
   permissionAssignmentStore,
   positionCollection,
+  roleAssignmentStore,
   roleCollection,
   type MockPosition,
   type MockRole,
@@ -92,6 +93,7 @@ const positions: AccessControlServices["positions"] = {
   async delete(id) {
     await positionCollection.remove(id);
     permissionAssignmentStore.remove("position", id);
+    roleAssignmentStore.remove("position", id);
   },
 };
 
@@ -105,12 +107,20 @@ const assignments: AccessControlServices["assignments"] = {
   },
 };
 
+const roleAssignments: AccessControlServices["roleAssignments"] = {
+  async getAssignedRoleIds(subjectType, subjectId) {
+    return roleAssignmentStore.get(subjectType, subjectId);
+  },
+  async assignRoles(subjectType, subjectId, roleIds) {
+    await roleAssignmentStore.set(subjectType, subjectId, roleIds);
+  },
+};
+
 /**
  * The WCM-specific `AccessControlServices` adapter — the only integration code the shared
  * Access Control module requires beyond its `permissions` catalog prop (see
  * @novacore/frontend-next-shadcn/docs/access-control.md). Backed by mock collections today, same
- * as every other WCM feature (no WCM backend exists yet); swapping these three objects' bodies
- * for real `httpClient` calls is the entire future migration, with zero changes required in the
- * shared UI.
+ * as every other WCM feature (no WCM backend exists yet); swapping these objects' bodies for real
+ * `httpClient` calls is the entire future migration, with zero changes required in the shared UI.
  */
-export const accessControlServices: AccessControlServices = { roles, positions, assignments };
+export const accessControlServices: AccessControlServices = { roles, positions, assignments, roleAssignments };

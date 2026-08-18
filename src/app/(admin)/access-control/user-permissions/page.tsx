@@ -12,6 +12,7 @@ export default function Page() {
         permissions={wcmPermissionDefinitions}
         subjectProvider={wcmSubjectSearchProvider}
         renderFilters={(props) => <UserPermissionsFilters {...props} />}
+        getDetailHref={(subjectId) => `/access-control/user-permissions/${subjectId}`}
       />
     </PermissionBoundary>
   );
