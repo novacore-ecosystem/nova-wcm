@@ -34,6 +34,7 @@ export const wcmPermissionDefinitions: PermissionDefinition[] = [
   {
     id: WcmPermissions.Content.View,
     translationKey: "accessControlCatalog.permissions.content.view",
+    descriptionTranslationKey: "accessControlCatalog.descriptions.content.view",
     group: "content",
     groupTranslationKey: "accessControlCatalog.groups.content",
     order: 1,
@@ -41,6 +42,7 @@ export const wcmPermissionDefinitions: PermissionDefinition[] = [
   {
     id: WcmPermissions.Content.Manage,
     translationKey: "accessControlCatalog.permissions.content.manage",
+    descriptionTranslationKey: "accessControlCatalog.descriptions.content.manage",
     group: "content",
     groupTranslationKey: "accessControlCatalog.groups.content",
     order: 2,
@@ -48,6 +50,7 @@ export const wcmPermissionDefinitions: PermissionDefinition[] = [
   {
     id: WcmPermissions.Catalog.View,
     translationKey: "accessControlCatalog.permissions.catalog.view",
+    descriptionTranslationKey: "accessControlCatalog.descriptions.catalog.view",
     group: "catalog",
     groupTranslationKey: "accessControlCatalog.groups.catalog",
     order: 1,
@@ -55,6 +58,7 @@ export const wcmPermissionDefinitions: PermissionDefinition[] = [
   {
     id: WcmPermissions.Catalog.Manage,
     translationKey: "accessControlCatalog.permissions.catalog.manage",
+    descriptionTranslationKey: "accessControlCatalog.descriptions.catalog.manage",
     group: "catalog",
     groupTranslationKey: "accessControlCatalog.groups.catalog",
     order: 2,
@@ -62,6 +66,7 @@ export const wcmPermissionDefinitions: PermissionDefinition[] = [
   {
     id: WcmPermissions.Media.View,
     translationKey: "accessControlCatalog.permissions.media.view",
+    descriptionTranslationKey: "accessControlCatalog.descriptions.media.view",
     group: "media",
     groupTranslationKey: "accessControlCatalog.groups.media",
     order: 1,
@@ -69,6 +74,7 @@ export const wcmPermissionDefinitions: PermissionDefinition[] = [
   {
     id: WcmPermissions.Media.Manage,
     translationKey: "accessControlCatalog.permissions.media.manage",
+    descriptionTranslationKey: "accessControlCatalog.descriptions.media.manage",
     group: "media",
     groupTranslationKey: "accessControlCatalog.groups.media",
     order: 2,
@@ -76,6 +82,7 @@ export const wcmPermissionDefinitions: PermissionDefinition[] = [
   {
     id: WcmPermissions.Website.View,
     translationKey: "accessControlCatalog.permissions.website.view",
+    descriptionTranslationKey: "accessControlCatalog.descriptions.website.view",
     group: "website",
     groupTranslationKey: "accessControlCatalog.groups.website",
     order: 1,
@@ -83,6 +90,7 @@ export const wcmPermissionDefinitions: PermissionDefinition[] = [
   {
     id: WcmPermissions.Website.Manage,
     translationKey: "accessControlCatalog.permissions.website.manage",
+    descriptionTranslationKey: "accessControlCatalog.descriptions.website.manage",
     group: "website",
     groupTranslationKey: "accessControlCatalog.groups.website",
     order: 2,
@@ -90,6 +98,7 @@ export const wcmPermissionDefinitions: PermissionDefinition[] = [
   {
     id: WcmPermissions.Settings.View,
     translationKey: "accessControlCatalog.permissions.settings.view",
+    descriptionTranslationKey: "accessControlCatalog.descriptions.settings.view",
     group: "settings",
     groupTranslationKey: "accessControlCatalog.groups.settings",
     order: 1,
@@ -97,6 +106,7 @@ export const wcmPermissionDefinitions: PermissionDefinition[] = [
   {
     id: WcmPermissions.Settings.Manage,
     translationKey: "accessControlCatalog.permissions.settings.manage",
+    descriptionTranslationKey: "accessControlCatalog.descriptions.settings.manage",
     group: "settings",
     groupTranslationKey: "accessControlCatalog.groups.settings",
     order: 2,
@@ -104,6 +114,7 @@ export const wcmPermissionDefinitions: PermissionDefinition[] = [
   {
     id: AccessControlPermissions.permission.view,
     translationKey: "accessControlCatalog.permissions.accessControl.permissionView",
+    descriptionTranslationKey: "accessControlCatalog.descriptions.accessControl.permissionView",
     group: "accessControl",
     groupTranslationKey: "accessControlCatalog.groups.accessControl",
     order: 1,
@@ -111,6 +122,7 @@ export const wcmPermissionDefinitions: PermissionDefinition[] = [
   {
     id: AccessControlPermissions.permission.manage,
     translationKey: "accessControlCatalog.permissions.accessControl.permissionManage",
+    descriptionTranslationKey: "accessControlCatalog.descriptions.accessControl.permissionManage",
     group: "accessControl",
     groupTranslationKey: "accessControlCatalog.groups.accessControl",
     order: 2,
@@ -118,6 +130,7 @@ export const wcmPermissionDefinitions: PermissionDefinition[] = [
   {
     id: AccessControlPermissions.role.view,
     translationKey: "accessControlCatalog.permissions.accessControl.roleView",
+    descriptionTranslationKey: "accessControlCatalog.descriptions.accessControl.roleView",
     group: "accessControl",
     groupTranslationKey: "accessControlCatalog.groups.accessControl",
     order: 3,
@@ -125,6 +138,7 @@ export const wcmPermissionDefinitions: PermissionDefinition[] = [
   {
     id: AccessControlPermissions.role.manage,
     translationKey: "accessControlCatalog.permissions.accessControl.roleManage",
+    descriptionTranslationKey: "accessControlCatalog.descriptions.accessControl.roleManage",
     group: "accessControl",
     groupTranslationKey: "accessControlCatalog.groups.accessControl",
     order: 4,
@@ -132,6 +146,7 @@ export const wcmPermissionDefinitions: PermissionDefinition[] = [
   {
     id: AccessControlPermissions.position.view,
     translationKey: "accessControlCatalog.permissions.accessControl.positionView",
+    descriptionTranslationKey: "accessControlCatalog.descriptions.accessControl.positionView",
     group: "accessControl",
     groupTranslationKey: "accessControlCatalog.groups.accessControl",
     order: 5,
@@ -139,6 +154,7 @@ export const wcmPermissionDefinitions: PermissionDefinition[] = [
   {
     id: AccessControlPermissions.position.manage,
     translationKey: "accessControlCatalog.permissions.accessControl.positionManage",
+    descriptionTranslationKey: "accessControlCatalog.descriptions.accessControl.positionManage",
     group: "accessControl",
     groupTranslationKey: "accessControlCatalog.groups.accessControl",
     order: 6,
