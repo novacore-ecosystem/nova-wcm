@@ -41,9 +41,9 @@ export function MediaLibraryPage() {
     previewAsset,
     setPreviewAsset,
     openPreview,
-    altTextForm,
-    submitAltText,
-    isSavingAltText,
+    metadataForm,
+    submitMetadata,
+    isSavingMetadata,
     deleteTarget,
     setDeleteTarget,
     confirmDelete,
@@ -138,9 +138,9 @@ export function MediaLibraryPage() {
       <MediaPreviewDialog
         asset={previewAsset}
         onOpenChange={(open) => !open && setPreviewAsset(null)}
-        form={altTextForm}
-        onSubmit={submitAltText}
-        isSaving={isSavingAltText}
+        form={metadataForm}
+        onSubmit={submitMetadata}
+        isSaving={isSavingMetadata}
       />
 
       <ConfirmDialog

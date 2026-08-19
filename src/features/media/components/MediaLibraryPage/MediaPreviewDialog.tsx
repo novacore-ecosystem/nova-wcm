@@ -12,12 +12,13 @@ import {
   FormField,
   Input,
   RelativeTime,
+  Textarea,
 } from "@novacore/frontend-next-shadcn";
 
 import { Form } from "@/shared/forms";
 import { useAppTranslation } from "@/shared/i18n";
 import { formatFileSize } from "@/features/media/lib/formatFileSize";
-import type { EditMediaAltTextFormValues } from "@/features/media/media.schema";
+import type { EditMediaMetadataFormValues } from "@/features/media/media.schema";
 import type { MediaAsset } from "@/services/media";
 
 export function MediaPreviewDialog({
@@ -29,8 +30,8 @@ export function MediaPreviewDialog({
 }: {
   asset: MediaAsset | null;
   onOpenChange: (open: boolean) => void;
-  form: UseFormReturn<EditMediaAltTextFormValues>;
-  onSubmit: (values: EditMediaAltTextFormValues) => void | Promise<void>;
+  form: UseFormReturn<EditMediaMetadataFormValues>;
+  onSubmit: (values: EditMediaMetadataFormValues) => void | Promise<void>;
   isSaving: boolean;
 }) {
   const { t } = useAppTranslation();
@@ -81,6 +82,38 @@ export function MediaPreviewDialog({
               >
                 <Input id="previewAltText" {...register("altText")} />
               </FormField>
+
+              <div className="grid gap-3 border-t border-border pt-3">
+                <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                  {t("media.preview.seoSectionTitle", "SEO / Metadata")}
+                </p>
+                <FormField
+                  label={t("media.preview.title", "Tiêu đề")}
+                  htmlFor="previewTitle"
+                  description={t("media.preview.titleHelp", "Tên ngắn gọn, dễ đọc cho tệp — khác với Alt text và Mô tả.")}
+                >
+                  <Input id="previewTitle" {...register("title")} />
+                </FormField>
+                <FormField
+                  label={t("media.preview.description", "Mô tả")}
+                  htmlFor="previewDescription"
+                  description={t("media.preview.descriptionHelp", "Thông tin bối cảnh chi tiết hơn về nội dung ảnh.")}
+                >
+                  <Textarea id="previewDescription" rows={2} {...register("description")} />
+                </FormField>
+                <div className="grid grid-cols-2 gap-3">
+                  <FormField label={t("media.preview.author", "Tác giả")} htmlFor="previewAuthor">
+                    <Input id="previewAuthor" {...register("author")} />
+                  </FormField>
+                  <FormField label={t("media.preview.copyright", "Bản quyền")} htmlFor="previewCopyright">
+                    <Input id="previewCopyright" {...register("copyright")} />
+                  </FormField>
+                </div>
+                <FormField label={t("media.preview.rating", "Đánh giá (0–5)")} htmlFor="previewRating">
+                  <Input id="previewRating" type="number" min={0} max={5} step={1} {...register("rating")} />
+                </FormField>
+              </div>
+
               <DialogFooter>
                 <Button type="submit" loading={isSaving}>
                   {t("common.save", "Lưu thay đổi")}

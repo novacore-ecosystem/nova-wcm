@@ -12,9 +12,9 @@ import {
   useUpdateMediaAssetMutation,
 } from "@/features/media/api/media.queries";
 import {
-  editMediaAltTextSchema,
+  editMediaMetadataSchema,
   uploadMediaSchema,
-  type EditMediaAltTextFormValues,
+  type EditMediaMetadataFormValues,
   type UploadMediaFormValues,
 } from "@/features/media/media.schema";
 import type { MediaAsset, MediaKind } from "@/services/media";
@@ -61,16 +61,35 @@ export function useMediaLibraryPage() {
   }
 
   const [previewAsset, setPreviewAsset] = useState<MediaAsset | null>(null);
-  const altTextForm = useAppForm(editMediaAltTextSchema, { defaultValues: { altText: "" } });
+  const metadataForm = useAppForm(editMediaMetadataSchema, {
+    defaultValues: { altText: "", title: "", description: "", author: "", copyright: "", rating: undefined },
+  });
 
   function openPreview(asset: MediaAsset) {
-    altTextForm.reset({ altText: asset.altText ?? "" });
+    metadataForm.reset({
+      altText: asset.altText ?? "",
+      title: asset.title ?? "",
+      description: asset.description ?? "",
+      author: asset.author ?? "",
+      copyright: asset.copyright ?? "",
+      rating: asset.rating,
+    });
     setPreviewAsset(asset);
   }
 
-  async function submitAltText(values: EditMediaAltTextFormValues) {
+  async function submitMetadata(values: EditMediaMetadataFormValues) {
     if (!previewAsset) return;
-    const updated = await updateMutation.mutateAsync({ id: previewAsset.id, patch: { altText: values.altText || undefined } });
+    const updated = await updateMutation.mutateAsync({
+      id: previewAsset.id,
+      patch: {
+        altText: values.altText || undefined,
+        title: values.title || undefined,
+        description: values.description || undefined,
+        author: values.author || undefined,
+        copyright: values.copyright || undefined,
+        rating: values.rating,
+      },
+    });
     setPreviewAsset(updated);
   }
 
@@ -102,9 +121,9 @@ export function useMediaLibraryPage() {
     previewAsset,
     setPreviewAsset,
     openPreview,
-    altTextForm,
-    submitAltText,
-    isSavingAltText: updateMutation.isPending,
+    metadataForm,
+    submitMetadata,
+    isSavingMetadata: updateMutation.isPending,
     deleteTarget,
     setDeleteTarget,
     confirmDelete,
