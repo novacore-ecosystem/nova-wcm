@@ -1,5 +1,5 @@
-import { ArticleForm } from "@/features/article";
+import { ArticleWorkspace } from "@/features/article";
 
 export default function Page() {
-  return <ArticleForm />;
+  return <ArticleWorkspace />;
 }

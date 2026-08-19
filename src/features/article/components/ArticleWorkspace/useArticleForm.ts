@@ -7,7 +7,7 @@ import { HttpError } from "@novacore/frontend-foundation";
 import { useAppForm } from "@/shared/forms";
 import { slugify } from "@/shared/lib/slugify";
 import { articleSchema, type ArticleFormValues } from "@/features/article/article.schema";
-import { useArticleQuery, useCreateArticleMutation, useUpdateArticleMutation } from "@/features/article/api/article.queries";
+import { useAllArticlesQuery, useArticleQuery, useCreateArticleMutation, useUpdateArticleMutation } from "@/features/article/api/article.queries";
 import { useAllArticleCategoriesQuery } from "@/features/article-category/api/article-category.queries";
 import { useAllTagsQuery } from "@/features/tag/api/tag.queries";
 
@@ -23,19 +23,23 @@ const DEFAULT_VALUES: ArticleFormValues = {
   featured: false,
   status: "draft",
   publishedAt: "",
+  scheduledAt: "",
   seoTitle: "",
   seoDescription: "",
   canonicalUrl: "",
+  relatedArticleIds: [],
 };
 
 export const ARTICLE_AUTHORS = ["Minh Anh", "Thu Hà", "Quốc Bảo"];
 
+/** Core form/data logic for the article workspace — RHF state, load/save, classification helpers. Tab layout and AI state live in `useArticleWorkspace`. */
 export function useArticleForm(articleId?: string) {
   const router = useRouter();
   const isEditing = !!articleId;
   const existing = useArticleQuery(articleId ?? "");
   const categories = useAllArticleCategoriesQuery();
   const tags = useAllTagsQuery();
+  const allArticles = useAllArticlesQuery();
   const [slugTouched, setSlugTouched] = useState(false);
 
   const form = useAppForm(articleSchema, { defaultValues: DEFAULT_VALUES });
@@ -57,9 +61,11 @@ export function useArticleForm(articleId?: string) {
         featured: existing.data.featured,
         status: existing.data.status,
         publishedAt: existing.data.publishedAt ?? "",
+        scheduledAt: existing.data.scheduledAt ?? "",
         seoTitle: existing.data.seoTitle ?? "",
         seoDescription: existing.data.seoDescription ?? "",
         canonicalUrl: existing.data.canonicalUrl ?? "",
+        relatedArticleIds: existing.data.relatedArticleIds ?? [],
       });
       setSlugTouched(true);
     }
@@ -81,6 +87,11 @@ export function useArticleForm(articleId?: string) {
     form.setValue("tagIds", current.includes(tagId) ? current.filter((id) => id !== tagId) : [...current, tagId]);
   }
 
+  function toggleRelatedArticle(id: string) {
+    const current = form.getValues("relatedArticleIds");
+    form.setValue("relatedArticleIds", current.includes(id) ? current.filter((relatedId) => relatedId !== id) : [...current, id]);
+  }
+
   const onSubmit = async (values: ArticleFormValues) => {
     await mutation.mutateAsync(values);
     router.push("/content/articles");
@@ -94,8 +105,10 @@ export function useArticleForm(articleId?: string) {
     onTitleChange,
     onSlugChange,
     toggleTag,
+    toggleRelatedArticle,
     categories: categories.data ?? [],
     tags: tags.data ?? [],
+    otherArticles: (allArticles.data ?? []).filter((article) => article.id !== articleId),
     isEditing,
     isLoadingExisting: isEditing && existing.isLoading,
     isSubmitting: mutation.isPending,

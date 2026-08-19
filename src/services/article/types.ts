@@ -21,4 +21,7 @@ export interface Article {
   seoDescription?: string;
   canonicalUrl?: string;
   ogImageUrl?: string;
+  /** Scheduled future publish time — distinct from `publishedAt`, which is only set once the article actually goes live. */
+  scheduledAt?: string;
+  relatedArticleIds: string[];
 }

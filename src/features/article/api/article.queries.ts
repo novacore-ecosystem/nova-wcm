@@ -20,6 +20,10 @@ export function useArticleQuery(id: string) {
   return useQuery({ queryKey: articleKeys.detail(id), queryFn: () => articleService.get(id), enabled: !!id });
 }
 
+export function useAllArticlesQuery() {
+  return useQuery({ queryKey: [...articleKeys.all, "all"], queryFn: () => articleService.listAll() });
+}
+
 export function useCreateArticleMutation() {
   const queryClient = useQueryClient();
   return useMutation({

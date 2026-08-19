@@ -15,9 +15,11 @@ export const articleSchema = z.object({
   featured: z.boolean().default(false),
   status: z.enum(["draft", "published"]),
   publishedAt: z.string().optional().or(z.literal("")),
+  scheduledAt: z.string().optional().or(z.literal("")),
   seoTitle: z.string().max(70, "Keep it under 70 characters").optional().or(z.literal("")),
   seoDescription: z.string().max(170, "Keep it under 170 characters").optional().or(z.literal("")),
   canonicalUrl: z.string().url("Enter a valid URL").optional().or(z.literal("")),
+  relatedArticleIds: z.array(z.string()).default([]),
 });
 
 export type ArticleFormValues = z.infer<typeof articleSchema>;

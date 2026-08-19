@@ -1,2 +1,2 @@
 export { ArticleListPage } from "@/features/article/components/ArticleListPage";
-export { ArticleForm } from "@/features/article/components/ArticleForm";
+export { ArticleWorkspace } from "@/features/article/components/ArticleWorkspace";

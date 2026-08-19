@@ -19,6 +19,7 @@ async function resolveClassification(values: ArticleFormValues) {
 
 export const articleService = {
   list: (request: CriteriaRequest) => articleCollection.list(request),
+  listAll: () => articleCollection.listAll(),
   get: (id: string) => articleCollection.get(id),
 
   async create(values: ArticleFormValues) {
@@ -36,11 +37,13 @@ export const articleService = {
       featured: values.featured,
       status: values.status,
       publishedAt: values.status === "published" ? values.publishedAt || now : undefined,
+      scheduledAt: values.status === "draft" ? values.scheduledAt || undefined : undefined,
       updatedAt: now,
       views: 0,
       seoTitle: values.seoTitle || undefined,
       seoDescription: values.seoDescription || undefined,
       canonicalUrl: values.canonicalUrl || undefined,
+      relatedArticleIds: values.relatedArticleIds,
     };
     return articleCollection.create(article);
   },
@@ -60,10 +63,12 @@ export const articleService = {
       featured: values.featured,
       status: values.status,
       publishedAt: values.status === "published" ? values.publishedAt || existing.publishedAt || now : undefined,
+      scheduledAt: values.status === "draft" ? values.scheduledAt || undefined : undefined,
       updatedAt: now,
       seoTitle: values.seoTitle || undefined,
       seoDescription: values.seoDescription || undefined,
       canonicalUrl: values.canonicalUrl || undefined,
+      relatedArticleIds: values.relatedArticleIds,
     });
   },
 
