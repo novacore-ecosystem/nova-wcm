@@ -2,9 +2,9 @@ import { getCurrentUser, login, logout, refreshToken, type LoginRequestDto } fro
 import type { LoginFormValues } from "@/features/auth/auth.schema";
 
 export const authService = {
-  async login(values: LoginFormValues) {
+  async login(values: LoginFormValues, tenantClientKey?: string) {
     const request: LoginRequestDto = { email: values.email, password: values.password };
-    await login(request);
+    await login(request, { tenantClientKey });
     return getCurrentUser();
   },
   async logout() {

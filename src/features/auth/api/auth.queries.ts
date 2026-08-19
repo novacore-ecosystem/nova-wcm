@@ -34,7 +34,8 @@ export function useLoginMutation() {
   const setAuthenticated = useSessionStore((state) => state.setAuthenticated);
 
   return useMutation({
-    mutationFn: (values: LoginFormValues) => authService.login(values),
+    mutationFn: ({ values, tenantClientKey }: { values: LoginFormValues; tenantClientKey?: string }) =>
+      authService.login(values, tenantClientKey),
     onSuccess: (user) => {
       setAuthenticated(user);
       queryClient.setQueryData(sessionKeys.bootstrap(), user);

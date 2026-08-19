@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Card, CardContent, CardHeader, CardTitle, FormField, Input, PasswordInput } from "@novacore/frontend-next-shadcn";
+import { Button, Card, CardContent, CardHeader, CardTitle, FormField, Input, PasswordInput, TenantSelector } from "@novacore/frontend-next-shadcn";
 
 import { Form } from "@/shared/forms";
 import { useAppTranslation } from "@/shared/i18n";
@@ -8,7 +8,16 @@ import { useLoginPage } from "@/features/auth/components/LoginPage/useLoginPage"
 
 export function LoginPage() {
   const { t } = useAppTranslation();
-  const { form, onSubmit, isSubmitting, errorMessage } = useLoginPage();
+  const {
+    form,
+    onSubmit,
+    isSubmitting,
+    errorMessage,
+    tenantConfigured,
+    tenantDirectoryService,
+    selectedTenant,
+    setSelectedTenant,
+  } = useLoginPage();
   const {
     register,
     formState: { errors },
@@ -24,6 +33,11 @@ export function LoginPage() {
         </CardHeader>
         <CardContent>
           <Form form={form} onSubmit={onSubmit} className="grid gap-4">
+            {!tenantConfigured ? (
+              <FormField label={t("auth.login.tenant", "Tenant")} htmlFor="tenant">
+                <TenantSelector service={tenantDirectoryService} value={selectedTenant} onChange={setSelectedTenant} />
+              </FormField>
+            ) : null}
             <FormField label={t("auth.login.email", "Email")} htmlFor="email" error={errors.email?.message}>
               <Input id="email" type="email" autoComplete="username" invalid={!!errors.email} {...register("email")} />
             </FormField>

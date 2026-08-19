@@ -12,11 +12,13 @@ export interface LoginRequestDto {
 
 /**
  * `POST /auth/login`. Sets HTTP-only session cookies; the response body carries no token.
- * Requires X-Tenant-Client-Key to resolve which tenant is being logged into.
+ * Requires X-Tenant-Client-Key to resolve which tenant is being logged into — defaults to the
+ * env-configured key, overridable when the login page's tenant selector is shown (see
+ * `useTenantLoginConfiguration`).
  */
-export async function login(request: LoginRequestDto): Promise<void> {
+export async function login(request: LoginRequestDto, options?: { tenantClientKey?: string }): Promise<void> {
   const response = await httpClient.post<ApiResponse<object>>(`${BASE_PATH}/login`, request, {
-    headers: { "X-Tenant-Client-Key": env.tenantClientKey },
+    headers: { "X-Tenant-Client-Key": options?.tenantClientKey ?? env.tenantClientKey },
   });
   unwrapApiResponse(response);
 }
