@@ -8,6 +8,7 @@ import { useAppForm } from "@/shared/forms";
 import {
   useCreateMediaAssetMutation,
   useDeleteMediaAssetMutation,
+  useDownloadMediaAssetMutation,
   useMediaAssetsQuery,
   useUpdateMediaAssetMutation,
 } from "@/features/media/api/media.queries";
@@ -49,6 +50,11 @@ export function useMediaLibraryPage() {
   const createMutation = useCreateMediaAssetMutation();
   const updateMutation = useUpdateMediaAssetMutation();
   const deleteMutation = useDeleteMediaAssetMutation();
+  const downloadMutation = useDownloadMediaAssetMutation();
+
+  function downloadAsset(asset: MediaAsset) {
+    downloadMutation.mutate(asset.id);
+  }
 
   const [uploadOpen, setUploadOpen] = useState(false);
   const uploadForm = useAppForm(uploadMediaSchema, { defaultValues: { fileName: "", altText: "" } });
@@ -151,5 +157,7 @@ export function useMediaLibraryPage() {
     setDeleteTarget,
     confirmDelete,
     isDeleting: deleteMutation.isPending,
+    downloadAsset,
+    isDownloading: downloadMutation.isPending,
   };
 }

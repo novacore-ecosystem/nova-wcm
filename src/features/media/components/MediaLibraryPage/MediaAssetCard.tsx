@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Copy, Eye, EllipsisVertical, FileText, Music, Trash2, Video } from "lucide-react";
+import { Copy, Download, Eye, EllipsisVertical, FileText, Music, Trash2, Video } from "lucide-react";
 import {
   Button,
   DropdownMenu,
@@ -17,10 +17,12 @@ import type { MediaAsset } from "@/services/media";
 export function MediaAssetCard({
   asset,
   onPreview,
+  onDownload,
   onDelete,
 }: {
   asset: MediaAsset;
   onPreview: (asset: MediaAsset) => void;
+  onDownload: (asset: MediaAsset) => void;
   onDelete: (asset: MediaAsset) => void;
 }) {
   const { t } = useAppTranslation();
@@ -80,6 +82,10 @@ export function MediaAssetCard({
             <DropdownMenuItem onSelect={(event) => { event.preventDefault(); void handleCopyUrl(); }}>
               <Copy className="mr-2 size-4" />
               {copied ? t("media.card.copied", "Đã sao chép") : t("media.card.copyUrl", "Sao chép URL")}
+            </DropdownMenuItem>
+            <DropdownMenuItem onSelect={() => onDownload(asset)}>
+              <Download className="mr-2 size-4" />
+              {t("media.card.download", "Tải xuống")}
             </DropdownMenuItem>
             <DropdownMenuItem destructive onSelect={() => onDelete(asset)}>
               <Trash2 className="mr-2 size-4" />

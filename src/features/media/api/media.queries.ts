@@ -7,6 +7,7 @@ import {
   createMediaAsset,
   getMediaAsset,
   listMediaAssets,
+  mediaDownloadService,
   removeMediaAsset,
   updateMediaAsset,
   type CreateMediaAssetInput,
@@ -56,5 +57,16 @@ export function useDeleteMediaAssetMutation() {
   return useMutation({
     mutationFn: (id: string) => removeMediaAsset(id),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: mediaKeys.all }),
+  });
+}
+
+export function useDownloadMediaAssetMutation() {
+  return useMutation({
+    mutationFn: (id: string) => mediaDownloadService.getDownloadUrl(id),
+    onSuccess: (result) => {
+      // Mock URLs are cross-origin/fake, so the `download` attribute can't force a same-tab save —
+      // a real backend serving actual files should get an `<a download>` here instead.
+      window.open(result.url, "_blank", "noopener,noreferrer");
+    },
   });
 }

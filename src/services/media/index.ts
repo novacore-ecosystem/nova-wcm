@@ -7,3 +7,4 @@ export {
   removeMediaAsset,
   type CreateMediaAssetInput,
 } from "@/services/media/media.service";
+export { mediaDownloadService, type MediaDownloadResult } from "@/services/media/media-download.service";

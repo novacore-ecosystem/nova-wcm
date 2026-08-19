@@ -32,4 +32,7 @@ export interface MediaAsset {
   rating?: number;
   typeMetadata?: MediaTypeMetadata;
   uploadedAt: string;
+  uploadedBy?: string;
+  /** Bumped on every General/SEO/Metadata patch — distinct from `uploadedAt`, which never changes after creation. */
+  updatedAt?: string;
 }

@@ -1,6 +1,7 @@
 import type { CriteriaRequest } from "@novacore/frontend-foundation";
 
 import { createMockCollection } from "@/shared/lib/mock/mockCollection";
+import { useSessionStore } from "@/shared/stores/session.store";
 import type { MediaAsset } from "@/services/media/media.types";
 
 /**
@@ -22,6 +23,8 @@ const seed: MediaAsset[] = [
     height: 320,
     altText: "Logo công ty nội thất Nova Home",
     uploadedAt: "2026-06-02T08:15:00+07:00",
+    uploadedBy: "Root",
+    updatedAt: "2026-06-02T08:15:00+07:00",
   },
   {
     id: "media-2",
@@ -35,6 +38,8 @@ const seed: MediaAsset[] = [
     height: 320,
     altText: "Banner khuyến mãi tháng 8 giảm giá đến 30%",
     uploadedAt: "2026-08-10T09:00:00+07:00",
+    uploadedBy: "Root",
+    updatedAt: "2026-08-10T09:00:00+07:00",
   },
   {
     id: "media-3",
@@ -48,6 +53,8 @@ const seed: MediaAsset[] = [
     height: 320,
     altText: "Không gian phòng khách với sofa và bàn trà gỗ sồi",
     uploadedAt: "2026-05-20T14:30:00+07:00",
+    uploadedBy: "Root",
+    updatedAt: "2026-05-20T14:30:00+07:00",
   },
   {
     id: "media-4",
@@ -61,6 +68,8 @@ const seed: MediaAsset[] = [
     height: 320,
     altText: "Phòng ngủ trang trí theo phong cách tối giản",
     uploadedAt: "2026-05-20T14:32:00+07:00",
+    uploadedBy: "Root",
+    updatedAt: "2026-05-20T14:32:00+07:00",
   },
   {
     id: "media-5",
@@ -74,6 +83,8 @@ const seed: MediaAsset[] = [
     height: 320,
     altText: "Bàn ăn gỗ sồi tự nhiên 6 chỗ ngồi, góc chụp chính diện",
     uploadedAt: "2026-07-14T10:05:00+07:00",
+    uploadedBy: "Root",
+    updatedAt: "2026-07-14T10:05:00+07:00",
   },
   {
     id: "media-6",
@@ -87,6 +98,8 @@ const seed: MediaAsset[] = [
     height: 320,
     altText: "Bàn ăn gỗ sồi tự nhiên 6 chỗ ngồi, góc chụp cận vân gỗ",
     uploadedAt: "2026-07-14T10:07:00+07:00",
+    uploadedBy: "Root",
+    updatedAt: "2026-07-14T10:07:00+07:00",
   },
   {
     id: "media-7",
@@ -100,6 +113,8 @@ const seed: MediaAsset[] = [
     height: 320,
     altText: "Ghế sofa băng bọc vải màu xám đặt trong phòng khách",
     uploadedAt: "2026-07-18T16:20:00+07:00",
+    uploadedBy: "Root",
+    updatedAt: "2026-07-18T16:20:00+07:00",
   },
   {
     id: "media-8",
@@ -113,6 +128,8 @@ const seed: MediaAsset[] = [
     height: 320,
     altText: "Ghế làm việc công thái học ErgoFlex Pro màu đen",
     uploadedAt: "2026-08-01T11:45:00+07:00",
+    uploadedBy: "Root",
+    updatedAt: "2026-08-01T11:45:00+07:00",
   },
   {
     id: "media-9",
@@ -126,6 +143,8 @@ const seed: MediaAsset[] = [
     height: 320,
     altText: "Tủ quần áo 3 cánh gỗ công nghiệp phủ melamine",
     uploadedAt: "2026-06-25T09:10:00+07:00",
+    uploadedBy: "Root",
+    updatedAt: "2026-06-25T09:10:00+07:00",
   },
   {
     id: "media-10",
@@ -139,6 +158,8 @@ const seed: MediaAsset[] = [
     height: 320,
     altText: "Giường ngủ gỗ tự nhiên 1m8 kèm đầu giường bọc nệm",
     uploadedAt: "2026-06-28T13:50:00+07:00",
+    uploadedBy: "Root",
+    updatedAt: "2026-06-28T13:50:00+07:00",
   },
   {
     id: "media-11",
@@ -152,6 +173,8 @@ const seed: MediaAsset[] = [
     height: 320,
     altText: "Kệ sách gỗ thông 5 tầng đặt cạnh cửa sổ",
     uploadedAt: "2026-07-02T15:00:00+07:00",
+    uploadedBy: "Root",
+    updatedAt: "2026-07-02T15:00:00+07:00",
   },
   {
     id: "media-12",
@@ -165,6 +188,8 @@ const seed: MediaAsset[] = [
     height: 320,
     altText: "Đèn trần phòng khách kiểu dáng hiện đại",
     uploadedAt: "2026-07-05T08:40:00+07:00",
+    uploadedBy: "Root",
+    updatedAt: "2026-07-05T08:40:00+07:00",
   },
   {
     id: "media-13",
@@ -178,6 +203,8 @@ const seed: MediaAsset[] = [
     height: 320,
     altText: "Thảm trải sàn họa tiết hình học cho phòng khách",
     uploadedAt: "2026-07-08T10:25:00+07:00",
+    uploadedBy: "Root",
+    updatedAt: "2026-07-08T10:25:00+07:00",
   },
   {
     id: "media-14",
@@ -191,6 +218,8 @@ const seed: MediaAsset[] = [
     height: 320,
     altText: "Mặt tiền showroom nội thất tại Quận 1",
     uploadedAt: "2026-04-12T09:00:00+07:00",
+    uploadedBy: "Root",
+    updatedAt: "2026-04-12T09:00:00+07:00",
   },
   {
     id: "media-15",
@@ -204,6 +233,8 @@ const seed: MediaAsset[] = [
     height: 320,
     altText: "Không gian trưng bày nội thất tầng 2 của showroom",
     uploadedAt: "2026-04-12T09:05:00+07:00",
+    uploadedBy: "Root",
+    updatedAt: "2026-04-12T09:05:00+07:00",
   },
   {
     id: "media-16",
@@ -217,6 +248,8 @@ const seed: MediaAsset[] = [
     height: 320,
     altText: "Đội ngũ nhân viên cửa hàng chụp ảnh tập thể",
     uploadedAt: "2026-03-30T16:00:00+07:00",
+    uploadedBy: "Root",
+    updatedAt: "2026-03-30T16:00:00+07:00",
   },
   {
     id: "media-17",
@@ -230,6 +263,8 @@ const seed: MediaAsset[] = [
     height: 320,
     altText: "Đội ngũ tư vấn thiết kế nội thất đang trao đổi với khách hàng",
     uploadedAt: "2026-03-30T16:05:00+07:00",
+    uploadedBy: "Root",
+    updatedAt: "2026-03-30T16:05:00+07:00",
   },
   {
     id: "media-18",
@@ -243,6 +278,8 @@ const seed: MediaAsset[] = [
     height: 320,
     altText: "Khách hàng nhận bàn giao sản phẩm tại showroom",
     uploadedAt: "2026-08-05T14:15:00+07:00",
+    uploadedBy: "Root",
+    updatedAt: "2026-08-05T14:15:00+07:00",
   },
   {
     id: "media-19",
@@ -256,6 +293,8 @@ const seed: MediaAsset[] = [
     height: 320,
     altText: "Ảnh bìa trang Facebook giới thiệu bộ sưu tập mùa hè",
     uploadedAt: "2026-08-12T10:30:00+07:00",
+    uploadedBy: "Root",
+    updatedAt: "2026-08-12T10:30:00+07:00",
   },
   {
     id: "media-20",
@@ -269,6 +308,8 @@ const seed: MediaAsset[] = [
     height: 320,
     altText: "Biểu tượng favicon của website",
     uploadedAt: "2026-06-02T08:20:00+07:00",
+    uploadedBy: "Root",
+    updatedAt: "2026-06-02T08:20:00+07:00",
   },
   {
     id: "media-21",
@@ -278,6 +319,8 @@ const seed: MediaAsset[] = [
     sizeBytes: 1_842_300,
     kind: "document",
     uploadedAt: "2026-07-22T09:00:00+07:00",
+    uploadedBy: "Root",
+    updatedAt: "2026-07-22T09:00:00+07:00",
   },
   {
     id: "media-22",
@@ -287,6 +330,8 @@ const seed: MediaAsset[] = [
     sizeBytes: 2_950_100,
     kind: "document",
     uploadedAt: "2026-08-03T11:10:00+07:00",
+    uploadedBy: "Root",
+    updatedAt: "2026-08-03T11:10:00+07:00",
   },
   {
     id: "media-23",
@@ -297,6 +342,8 @@ const seed: MediaAsset[] = [
     kind: "document",
     typeMetadata: { kind: "document", pageCount: 4 },
     uploadedAt: "2026-02-18T08:30:00+07:00",
+    uploadedBy: "Root",
+    updatedAt: "2026-02-18T08:30:00+07:00",
   },
   {
     id: "media-24",
@@ -308,6 +355,8 @@ const seed: MediaAsset[] = [
     typeMetadata: { kind: "video", durationSeconds: 96 },
     altText: "Video giới thiệu showroom nội thất tại Quận 1",
     uploadedAt: "2026-05-02T10:00:00+07:00",
+    uploadedBy: "Root",
+    updatedAt: "2026-05-02T10:00:00+07:00",
   },
   {
     id: "media-25",
@@ -319,6 +368,8 @@ const seed: MediaAsset[] = [
     typeMetadata: { kind: "video", durationSeconds: 214 },
     altText: "Video hướng dẫn lắp ráp bàn ăn gỗ sồi tại nhà",
     uploadedAt: "2026-07-11T15:40:00+07:00",
+    uploadedBy: "Root",
+    updatedAt: "2026-07-11T15:40:00+07:00",
   },
   {
     id: "media-26",
@@ -329,6 +380,8 @@ const seed: MediaAsset[] = [
     kind: "audio",
     typeMetadata: { kind: "audio", durationSeconds: 128 },
     uploadedAt: "2026-06-15T09:30:00+07:00",
+    uploadedBy: "Root",
+    updatedAt: "2026-06-15T09:30:00+07:00",
   },
 ];
 
@@ -339,7 +392,8 @@ const collection = createMockCollection<MediaAsset>(seed, {
 
 export const listMediaAssets = (request?: CriteriaRequest) => collection.list(request);
 export const getMediaAsset = (id: string) => collection.get(id);
-export const updateMediaAsset = (id: string, patch: Partial<MediaAsset>) => collection.update(id, patch);
+/** Every patch (General/SEO/Metadata — independent calls, see `useMediaLibraryPage`) stamps `updatedAt` here, in one place, rather than each caller remembering to. */
+export const updateMediaAsset = (id: string, patch: Partial<MediaAsset>) => collection.update(id, { ...patch, updatedAt: new Date().toISOString() });
 export const removeMediaAsset = (id: string) => collection.remove(id);
 
 export interface CreateMediaAssetInput {
@@ -380,6 +434,7 @@ export async function createMediaAsset(input: CreateMediaAssetInput): Promise<Me
     height: isImage ? 320 : undefined,
     altText: input.altText,
     uploadedAt: new Date().toISOString(),
+    uploadedBy: useSessionStore.getState().user?.name,
   };
 
   return collection.create(row);

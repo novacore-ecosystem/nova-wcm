@@ -50,6 +50,7 @@ export function MediaLibraryPage() {
     setDeleteTarget,
     confirmDelete,
     isDeleting,
+    downloadAsset,
   } = useMediaLibraryPage();
 
   const typeOptions: { value: MediaTypeFilter; label: string }[] = [
@@ -117,7 +118,7 @@ export function MediaLibraryPage() {
           <>
             <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
               {assets.map((asset) => (
-                <MediaAssetCard key={asset.id} asset={asset} onPreview={openPreview} onDelete={setDeleteTarget} />
+                <MediaAssetCard key={asset.id} asset={asset} onPreview={openPreview} onDownload={downloadAsset} onDelete={setDeleteTarget} />
               ))}
             </div>
             <Pagination
