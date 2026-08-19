@@ -8,6 +8,7 @@ import {
   I18nProvider,
   PermissionProvider,
   TenantEntitlementProvider,
+  UserProfileProvider,
 } from "@novacore/frontend-next-shadcn";
 import type { Locale } from "@novacore/frontend-foundation";
 
@@ -18,6 +19,7 @@ import { WCM_ADMIN_THEME } from "@/shared/theme/wcm-theme";
 import { useLocaleStore } from "@/shared/stores/locale.store";
 import { NO_PERMISSIONS, useSessionStore } from "@/shared/stores/session.store";
 import { accessControlServices, useTenantEntitlementQuery } from "@/features/access-control";
+import { userProfileService } from "@/features/user-profile";
 
 function AppProviders({ children }: { children: ReactNode }) {
   const ownedPermissions = useSessionStore((state) => state.user?.permissions ?? NO_PERMISSIONS);
@@ -26,7 +28,9 @@ function AppProviders({ children }: { children: ReactNode }) {
   return (
     <PermissionProvider permissions={ownedPermissions}>
       <TenantEntitlementProvider status={entitlement.status} entitledPermissionIds={entitlement.entitledPermissionIds}>
-        <AccessControlProvider services={accessControlServices}>{children}</AccessControlProvider>
+        <AccessControlProvider services={accessControlServices}>
+          <UserProfileProvider service={userProfileService}>{children}</UserProfileProvider>
+        </AccessControlProvider>
       </TenantEntitlementProvider>
     </PermissionProvider>
   );

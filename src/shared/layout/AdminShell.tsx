@@ -2,7 +2,7 @@
 
 import { useRouter, usePathname } from "next/navigation";
 import { useState, type ReactNode } from "react";
-import { HelpCircle, Search, Settings as SettingsIcon, Sparkles } from "lucide-react";
+import { HelpCircle, Search, Settings as SettingsIcon, Sparkles, User as UserIcon } from "lucide-react";
 import {
   AboutDialog,
   AdminLayout,
@@ -78,6 +78,12 @@ function ShellSidebar({
           user={{ name: userName, role: userRole, email: userEmail }}
           items={[
             {
+              key: "profile",
+              label: t("nav.profile", "Profile"),
+              icon: <UserIcon className="size-4" />,
+              onSelect: () => router.push("/profile"),
+            },
+            {
               key: "settings",
               label: t("nav.settingsGeneral", "General"),
               icon: <SettingsIcon className="size-4" />,
@@ -150,6 +156,14 @@ export function AdminShell({ children }: { children: ReactNode }) {
         <UserProfile
           variant="compact"
           user={{ name: userName, role: userRole, email: user?.email }}
+          items={[
+            {
+              key: "profile",
+              label: t("nav.profile", "Profile"),
+              icon: <UserIcon className="size-4" />,
+              onSelect: () => router.push("/profile"),
+            },
+          ]}
           onLogout={() => logoutMutation.mutate()}
           logoutLabel={t("auth.logout", "Log out")}
           loading={logoutMutation.isPending}
