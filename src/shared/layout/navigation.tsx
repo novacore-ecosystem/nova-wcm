@@ -15,6 +15,10 @@ import {
   Users,
   Network,
   UserCog,
+  Lightbulb,
+  Layers,
+  MessagesSquare,
+  Sparkles,
 } from "lucide-react";
 import { Permissions } from "@novacore/frontend-foundation";
 import { createAccessControlNavigation, type NavigationGroup } from "@novacore/frontend-next-shadcn";
@@ -110,6 +114,29 @@ export const navigationConfig: NavigationConfig = [
       { id: "seo", label: "SEO", href: "/website/seo", permission: Permissions.Root, icon: <Search className="h-4 w-4" /> },
     ],
   },
+  {
+    id: "ai",
+    title: "AI",
+    collapsible: true,
+    items: [
+      { id: "ai-ideas", label: "Content ideation", href: "/ai/ideas", permission: Permissions.Root, icon: <Lightbulb className="h-4 w-4" /> },
+      { id: "ai-context", label: "Context", href: "/ai/context", permission: Permissions.Root, icon: <Layers className="h-4 w-4" /> },
+    ],
+  },
+  {
+    id: "support",
+    title: "Support",
+    collapsible: true,
+    items: [
+      {
+        id: "support-conversations",
+        label: "Conversations",
+        href: "/support/conversations",
+        permission: Permissions.Root,
+        icon: <MessagesSquare className="h-4 w-4" />,
+      },
+    ],
+  },
   accessControlGroup,
   {
     id: "settings-group",
@@ -129,6 +156,13 @@ export const navigationConfig: NavigationConfig = [
         href: "/settings/social",
         permission: Permissions.Root,
         icon: <Share2 className="h-4 w-4" />,
+      },
+      {
+        id: "settings-ai",
+        label: "AI",
+        href: "/settings/ai",
+        permission: Permissions.Root,
+        icon: <Sparkles className="h-4 w-4" />,
       },
     ],
   },
