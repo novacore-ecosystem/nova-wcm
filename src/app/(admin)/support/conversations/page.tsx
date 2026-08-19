@@ -1,5 +1,5 @@
-import { ConversationListPage } from "@/features/support-chat";
+import { ChatWorkspace } from "@/features/support-chat";
 
 export default function Page() {
-  return <ConversationListPage />;
+  return <ChatWorkspace />;
 }
