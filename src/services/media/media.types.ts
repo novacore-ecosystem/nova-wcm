@@ -1,4 +1,15 @@
-export type MediaKind = "image" | "document";
+export type MediaKind = "image" | "video" | "audio" | "document";
+
+/**
+ * Per-kind extension point (§18 of the WCM AI-readiness task): each `MediaKind` gets its own
+ * metadata shape instead of the Media UI hardcoding fields around images. Adding a new kind means
+ * adding one more union member here, not reworking `MediaPreviewDialog`.
+ */
+export type MediaTypeMetadata =
+  | { kind: "image" }
+  | { kind: "video"; durationSeconds?: number }
+  | { kind: "audio"; durationSeconds?: number }
+  | { kind: "document"; pageCount?: number };
 
 export interface MediaAsset {
   id: string;
@@ -19,5 +30,6 @@ export interface MediaAsset {
   copyright?: string;
   /** 0–5, IPTC-style rating convention. */
   rating?: number;
+  typeMetadata?: MediaTypeMetadata;
   uploadedAt: string;
 }

@@ -41,6 +41,8 @@ export function MediaLibraryPage() {
     previewAsset,
     setPreviewAsset,
     openPreview,
+    seoForm,
+    submitSeo,
     metadataForm,
     submitMetadata,
     isSavingMetadata,
@@ -53,6 +55,8 @@ export function MediaLibraryPage() {
   const typeOptions: { value: MediaTypeFilter; label: string }[] = [
     { value: "all", label: t("media.filter.all", "Tất cả") },
     { value: "image", label: t("media.filter.image", "Hình ảnh") },
+    { value: "video", label: t("media.filter.video", "Video") },
+    { value: "audio", label: t("media.filter.audio", "Âm thanh") },
     { value: "document", label: t("media.filter.document", "Tài liệu") },
   ];
 
@@ -138,8 +142,10 @@ export function MediaLibraryPage() {
       <MediaPreviewDialog
         asset={previewAsset}
         onOpenChange={(open) => !open && setPreviewAsset(null)}
-        form={metadataForm}
-        onSubmit={submitMetadata}
+        seoForm={seoForm}
+        onSubmitSeo={submitSeo}
+        metadataForm={metadataForm}
+        onSubmitMetadata={submitMetadata}
         isSaving={isSavingMetadata}
       />
 

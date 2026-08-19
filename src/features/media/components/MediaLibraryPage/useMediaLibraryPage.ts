@@ -13,10 +13,13 @@ import {
 } from "@/features/media/api/media.queries";
 import {
   editMediaMetadataSchema,
+  editMediaSeoSchema,
   uploadMediaSchema,
   type EditMediaMetadataFormValues,
+  type EditMediaSeoFormValues,
   type UploadMediaFormValues,
 } from "@/features/media/media.schema";
+import { buildTypeMetadata } from "@/features/media/lib/buildTypeMetadata";
 import type { MediaAsset, MediaKind } from "@/services/media";
 
 export type MediaTypeFilter = "all" | MediaKind;
@@ -61,23 +64,29 @@ export function useMediaLibraryPage() {
   }
 
   const [previewAsset, setPreviewAsset] = useState<MediaAsset | null>(null);
+  const seoForm = useAppForm(editMediaSeoSchema, { defaultValues: { altText: "", title: "", description: "" } });
   const metadataForm = useAppForm(editMediaMetadataSchema, {
-    defaultValues: { altText: "", title: "", description: "", author: "", copyright: "", rating: undefined },
+    defaultValues: { author: "", copyright: "", rating: undefined, durationSeconds: undefined, pageCount: undefined },
   });
 
   function openPreview(asset: MediaAsset) {
-    metadataForm.reset({
+    seoForm.reset({
       altText: asset.altText ?? "",
       title: asset.title ?? "",
       description: asset.description ?? "",
+    });
+    metadataForm.reset({
       author: asset.author ?? "",
       copyright: asset.copyright ?? "",
       rating: asset.rating,
+      durationSeconds: asset.typeMetadata && "durationSeconds" in asset.typeMetadata ? asset.typeMetadata.durationSeconds : undefined,
+      pageCount: asset.typeMetadata && "pageCount" in asset.typeMetadata ? asset.typeMetadata.pageCount : undefined,
     });
     setPreviewAsset(asset);
   }
 
-  async function submitMetadata(values: EditMediaMetadataFormValues) {
+  /** Independent PATCH #1 — General/SEO fields only. Mirrors the future `PATCH /media/{id}/seo`. */
+  async function submitSeo(values: EditMediaSeoFormValues) {
     if (!previewAsset) return;
     const updated = await updateMutation.mutateAsync({
       id: previewAsset.id,
@@ -85,9 +94,21 @@ export function useMediaLibraryPage() {
         altText: values.altText || undefined,
         title: values.title || undefined,
         description: values.description || undefined,
+      },
+    });
+    setPreviewAsset(updated);
+  }
+
+  /** Independent PATCH #2 — descriptive + type-specific metadata. Mirrors the future `PATCH /media/{id}/metadata`. */
+  async function submitMetadata(values: EditMediaMetadataFormValues) {
+    if (!previewAsset) return;
+    const updated = await updateMutation.mutateAsync({
+      id: previewAsset.id,
+      patch: {
         author: values.author || undefined,
         copyright: values.copyright || undefined,
         rating: values.rating,
+        typeMetadata: buildTypeMetadata(previewAsset.kind, values),
       },
     });
     setPreviewAsset(updated);
@@ -121,6 +142,8 @@ export function useMediaLibraryPage() {
     previewAsset,
     setPreviewAsset,
     openPreview,
+    seoForm,
+    submitSeo,
     metadataForm,
     submitMetadata,
     isSavingMetadata: updateMutation.isPending,

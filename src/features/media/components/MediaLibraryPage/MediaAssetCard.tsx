@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Copy, Eye, EllipsisVertical, FileText, Trash2 } from "lucide-react";
+import { Copy, Eye, EllipsisVertical, FileText, Music, Trash2, Video } from "lucide-react";
 import {
   Button,
   DropdownMenu,
@@ -50,6 +50,10 @@ export function MediaAssetCard({
             alt={asset.altText || asset.fileName}
             className="h-full w-full object-cover"
           />
+        ) : asset.kind === "video" ? (
+          <Video className="size-10 text-muted-foreground" />
+        ) : asset.kind === "audio" ? (
+          <Music className="size-10 text-muted-foreground" />
         ) : (
           <FileText className="size-10 text-muted-foreground" />
         )}

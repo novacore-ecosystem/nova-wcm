@@ -295,7 +295,40 @@ const seed: MediaAsset[] = [
     mimeType: "application/pdf",
     sizeBytes: 386_400,
     kind: "document",
+    typeMetadata: { kind: "document", pageCount: 4 },
     uploadedAt: "2026-02-18T08:30:00+07:00",
+  },
+  {
+    id: "media-24",
+    fileName: "gioi-thieu-showroom-quan-1.mp4",
+    url: "https://example-files.novawcm.dev/videos/gioi-thieu-showroom-quan-1.mp4",
+    mimeType: "video/mp4",
+    sizeBytes: 18_420_000,
+    kind: "video",
+    typeMetadata: { kind: "video", durationSeconds: 96 },
+    altText: "Video giới thiệu showroom nội thất tại Quận 1",
+    uploadedAt: "2026-05-02T10:00:00+07:00",
+  },
+  {
+    id: "media-25",
+    fileName: "huong-dan-lap-rap-ban-an.mp4",
+    url: "https://example-files.novawcm.dev/videos/huong-dan-lap-rap-ban-an.mp4",
+    mimeType: "video/mp4",
+    sizeBytes: 24_680_000,
+    kind: "video",
+    typeMetadata: { kind: "video", durationSeconds: 214 },
+    altText: "Video hướng dẫn lắp ráp bàn ăn gỗ sồi tại nhà",
+    uploadedAt: "2026-07-11T15:40:00+07:00",
+  },
+  {
+    id: "media-26",
+    fileName: "nhac-nen-video-quang-cao.mp3",
+    url: "https://example-files.novawcm.dev/audio/nhac-nen-video-quang-cao.mp3",
+    mimeType: "audio/mpeg",
+    sizeBytes: 3_140_000,
+    kind: "audio",
+    typeMetadata: { kind: "audio", durationSeconds: 128 },
+    uploadedAt: "2026-06-15T09:30:00+07:00",
   },
 ];
 
@@ -315,10 +348,14 @@ export interface CreateMediaAssetInput {
 }
 
 const DOCUMENT_EXTENSIONS = new Set(["pdf", "doc", "docx", "xls", "xlsx"]);
+const VIDEO_EXTENSIONS = new Set(["mp4", "mov", "webm"]);
+const AUDIO_EXTENSIONS = new Set(["mp3", "wav", "ogg"]);
 
 function inferAssetShape(fileName: string): { mimeType: string; kind: MediaAsset["kind"] } {
   const extension = fileName.split(".").pop()?.toLowerCase() ?? "";
   if (DOCUMENT_EXTENSIONS.has(extension)) return { mimeType: "application/pdf", kind: "document" };
+  if (VIDEO_EXTENSIONS.has(extension)) return { mimeType: "video/mp4", kind: "video" };
+  if (AUDIO_EXTENSIONS.has(extension)) return { mimeType: "audio/mpeg", kind: "audio" };
   if (extension === "png") return { mimeType: "image/png", kind: "image" };
   return { mimeType: "image/jpeg", kind: "image" };
 }
@@ -329,11 +366,12 @@ export async function createMediaAsset(input: CreateMediaAssetInput): Promise<Me
   const { mimeType, kind } = inferAssetShape(input.fileName);
   const isImage = kind === "image";
   const picsumUrl = `https://picsum.photos/seed/${id}/480/320`;
+  const assetFolder = { video: "videos", audio: "audio", document: "documents", image: "images" }[kind];
 
   const row: MediaAsset = {
     id,
     fileName: input.fileName,
-    url: isImage ? picsumUrl : `https://example-files.novawcm.dev/documents/${input.fileName}`,
+    url: isImage ? picsumUrl : `https://example-files.novawcm.dev/${assetFolder}/${input.fileName}`,
     thumbnailUrl: isImage ? picsumUrl : undefined,
     mimeType,
     sizeBytes: Math.round(120_000 + Math.random() * 2_800_000),

@@ -1,4 +1,4 @@
-export type { MediaAsset, MediaKind } from "@/services/media/media.types";
+export type { MediaAsset, MediaKind, MediaTypeMetadata } from "@/services/media/media.types";
 export {
   listMediaAssets,
   getMediaAsset,
