@@ -17,6 +17,10 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@editorjs/editorjs": "^2.31.6",
+    "@editorjs/header": "^2.8.9",
+    "@editorjs/list": "^2.0.9",
+    "@editorjs/quote": "^2.7.6",
     "@hookform/resolvers": "^5.7.1",
     "@novacore/frontend-foundation": "file:../common/frontend-foundation",
     "@novacore/frontend-next-shadcn": "file:../common/frontend-nextjs/packages/shadcn",
