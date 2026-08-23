@@ -4,17 +4,7 @@ import { Badge, Button } from "@novacore/frontend-next-shadcn";
 
 import { useAppTranslation } from "@/shared/i18n";
 import type { useContentWorkspace } from "@/features/content/components/ContentWorkspace/useContentWorkspace";
-
-const STATUS_TONE: Record<string, "success" | "warning" | "secondary"> = {
-  published: "success",
-  draft: "secondary",
-  inReview: "warning",
-  approved: "warning",
-  scheduled: "warning",
-  unpublished: "secondary",
-  archived: "secondary",
-  rejected: "warning",
-};
+import { CONTENT_STATUS_TONE } from "@/features/content/lib/contentStatusTone";
 
 export function VersionsTab({ workspace }: { workspace: ReturnType<typeof useContentWorkspace> }) {
   const { t } = useAppTranslation();
@@ -56,7 +46,7 @@ export function VersionsTab({ workspace }: { workspace: ReturnType<typeof useCon
                     <span className="text-sm font-medium">
                       {t("content.version", "Version")} {item.versionNumber}
                     </span>
-                    <Badge variant={STATUS_TONE[item.status] ?? "neutral"} className="capitalize">
+                    <Badge variant={CONTENT_STATUS_TONE[item.status]} className="capitalize">
                       {item.status}
                     </Badge>
                     {isPublished ? <Badge variant="success">{t("content.currentlyPublished", "Currently published")}</Badge> : null}

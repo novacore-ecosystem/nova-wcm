@@ -1,5 +1,5 @@
-import { ArticleListPage } from "@/features/article";
+import { ContentListPage } from "@/features/content/components/ContentListPage";
 
 export default function Page() {
-  return <ArticleListPage />;
+  return <ContentListPage />;
 }

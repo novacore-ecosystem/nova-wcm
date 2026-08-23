@@ -11,17 +11,7 @@ import { BasicInfoTab } from "@/features/content/components/ContentWorkspace/tab
 import { WritingTab } from "@/features/content/components/ContentWorkspace/tabs/WritingTab";
 import { VersionsTab } from "@/features/content/components/ContentWorkspace/tabs/VersionsTab";
 import { TranslationsTab } from "@/features/content/components/ContentWorkspace/tabs/TranslationsTab";
-
-const STATUS_TONE: Record<string, "success" | "warning" | "secondary"> = {
-  published: "success",
-  draft: "secondary",
-  inReview: "warning",
-  approved: "warning",
-  scheduled: "warning",
-  unpublished: "secondary",
-  archived: "secondary",
-  rejected: "warning",
-};
+import { CONTENT_STATUS_TONE } from "@/features/content/lib/contentStatusTone";
 
 export function ContentWorkspace({ contentId }: { contentId?: string }) {
   const { t } = useAppTranslation();
@@ -41,7 +31,7 @@ export function ContentWorkspace({ contentId }: { contentId?: string }) {
             actions={
               <div className="flex items-center gap-2">
                 {detail ? (
-                  <Badge variant={STATUS_TONE[detail.status] ?? "neutral"} className="capitalize">
+                  <Badge variant={CONTENT_STATUS_TONE[detail.status]} className="capitalize">
                     {detail.status}
                   </Badge>
                 ) : null}
