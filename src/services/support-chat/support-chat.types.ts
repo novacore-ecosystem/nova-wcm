@@ -1,59 +1,99 @@
-export type ConversationStatus = "unassigned" | "assigned" | "closed";
-export type MessageSender = "customer" | "agent" | "ai" | "system";
-export type ConversationPriority = "normal" | "important" | "high" | "urgent";
+/**
+ * Mirrors Chat.Domain's enums verbatim (see Chat.Domain/Enums). Numeric values match the C#
+ * `byte` enum ordinals — the wire format is the number, these string unions are this app's own
+ * display-friendly mapping (see `support-chat.mappers.ts`).
+ */
+export type ConversationStatus = "queued" | "open" | "pending" | "closed";
+export type ConversationType = "oneToOne" | "group";
+export type ConversationLifecycle = "session" | "persistent";
+export type ConversationPriority = "low" | "normal" | "high" | "urgent";
+
+export type MessageSenderType = "user" | "system" | "bot" | "service" | "ai";
+export type MessageFormat = "plainText" | "markdown";
+
+/** `Message.Type` has more values in the domain (Poll/Task/Schedule/Structured/...) — only the ones this UI actually renders are modeled; anything else falls back to a generic text render. */
+export type MessageType = "text" | "image" | "file" | "sticker" | "system";
 
 /**
- * AI participation state for a conversation. `holding` = AI is standing in for a human (keeping
- * the customer engaged); `humanActive` = a consultant is actively replying; `handover` = AI is
- * bridging while ownership moves between consultants. No real AI backend exists — this is state
- * modeling only, see `AiModeConfig`'s doc comment.
+ * `ChatMessageDto` verbatim (both the SignalR push payload and `ChatHub.RecoverMessages`' item
+ * shape — there is no REST list-messages endpoint, see `support-chat.service.ts`'s doc comment).
+ */
+export interface ConversationMessage {
+  id: string;
+  conversationId: string;
+  senderUserId?: string;
+  senderType: MessageSenderType;
+  sequence: number;
+  type: MessageType;
+  content: string;
+  format: MessageFormat;
+  createdAt: string;
+}
+
+/**
+ * `ConversationQueueItemDto` verbatim — the *only* field set the Unassigned tab has to work
+ * with. No customer/contact name, email, or avatar is available here (see the module's README-
+ * equivalent doc comment on `support-chat.service.ts` for why: Chat Service has no endpoint that
+ * returns Contact details for a conversation).
+ */
+export interface QueueConversationItem {
+  conversationId: string;
+  queueId: string;
+  enqueuedAt: string;
+  queuePriority: number;
+  title?: string;
+  type: ConversationType;
+  priority: ConversationPriority;
+}
+
+/**
+ * Composed client-side from `GetConversationResponse` (id/type/lifecycle/status/title/
+ * description/avatar/reason/priority/timestamps) + `GetConversationStatusResponse`
+ * (`assignedUserId` — the *only* endpoint that exposes it). Two round trips because the backend
+ * splits them; see `supportChatService.getConversationDetail`.
+ */
+export interface ConversationDetail {
+  id: string;
+  type: ConversationType;
+  lifecycle: ConversationLifecycle;
+  status: ConversationStatus;
+  title?: string;
+  description?: string;
+  avatar?: string;
+  reason?: string;
+  priority: ConversationPriority;
+  closedAt?: string;
+  lastActivityAt: string;
+  lastMessageSequence: number;
+  createdAt: string;
+  updatedAt: string;
+  /** From `GetConversationStatusResponse` only — undefined until that call resolves. */
+  assignedUserId?: string;
+}
+
+/** `HandoverInvitationDto` verbatim. No `fromAgentName`/reason field exists on the wire — Chat Service has no user directory and `ConversationTransferRequest` carries no note field. */
+export interface HandoverInvitation {
+  transferRequestId: string;
+  conversationId: string;
+  fromUserId: string;
+  requestedAt: string;
+}
+
+export interface ConversationReasonSuggestion {
+  id: string;
+  code: string;
+  text: string;
+}
+
+/**
+ * AI holding-mode scaffolding — UI-only, ephemeral (component state, not persisted). Chat
+ * Service has no endpoint to read/write conversation metadata, so unlike the rest of this file
+ * this has no backend counterpart at all; it resets on page reload. Kept for AI-readiness
+ * parity with the rest of the app (see `features/article`'s equivalent scaffolding) — enabling
+ * it only sets local state, it never triggers real generation.
  */
 export type AiConversationState = "disabled" | "holding" | "humanActive" | "handover";
 
-export interface ConversationMessage {
-  id: string;
-  sender: MessageSender;
-  senderName?: string;
-  body: string;
-  sentAt: string;
-}
-
-export type CustomerIdentityKind = "anonymous" | "authenticated" | "known";
-
-/**
- * A conversation is associated with a customer identity, not a display name typed into a chat
- * box. `kind` distinguishes a landing-page visitor who just filled the onboarding form
- * ("anonymous" — the business now knows who they are, but there's no account), a logged-in
- * e-commerce customer ("authenticated" — `accountId` set, identity resolved automatically), and a
- * returning contact recognized from a prior conversation ("known" — matched by email/phone but
- * still no account). See `features/support-chat/components/customer/`.
- */
-export interface CustomerIdentity {
-  kind: CustomerIdentityKind;
-  name: string;
-  email?: string;
-  phone?: string;
-  address?: string;
-  accountId?: string;
-}
-
-export interface HandoverRequest {
-  id: string;
-  fromAgentId: string;
-  fromAgentName: string;
-  toAgentId: string;
-  toAgentName: string;
-  reason?: string;
-  requestedAt: string;
-  status: "pending" | "accepted" | "rejected";
-}
-
-/**
- * `skills` scope what AI is allowed to answer (e.g. "General FAQ", "Shipping information").
- * `context` is free-text guidance from the consultant (e.g. "don't make refund decisions").
- * There is no real AI Service behind this — enabling holding mode only sets state, it never
- * triggers actual generation. See `docs`/task notes: "do not implement a fake AI backend."
- */
 export interface AiModeConfig {
   state: AiConversationState;
   skills: string[];
@@ -61,31 +101,4 @@ export interface AiModeConfig {
   enabledAt?: string;
 }
 
-/**
- * A customer conversation started from the (future) landing-page chat widget. `assignedAgentId`
- * models the pool → pick → own workflow: undefined means it's sitting in the unassigned pool, set
- * means a staff member owns it. Message history is *not* embedded here — see
- * `support-chat.service.ts`'s separate `listMessages`, cursor-paginated independently of the
- * conversation list.
- */
-export interface Conversation {
-  id: string;
-  customer: CustomerIdentity;
-  status: ConversationStatus;
-  assignedAgentId?: string;
-  assignedAgentName?: string;
-  priority: ConversationPriority;
-  unreadCount: number;
-  aiMode: AiModeConfig;
-  pendingHandover?: HandoverRequest;
-  createdAt: string;
-  updatedAt: string;
-  /** Denormalized for the list view only — the real message thread is fetched separately via `listMessages`, cursor-paginated independently. Kept in sync by `sendMessage`. */
-  lastMessagePreview?: string;
-  lastMessageSender?: MessageSender;
-}
-
-export interface SupportAgent {
-  id: string;
-  name: string;
-}
+export type ConversationListTab = "unassigned" | "assigned";

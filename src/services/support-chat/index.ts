@@ -1,15 +1,18 @@
-export { supportChatService, type ConversationListTab } from "@/services/support-chat/support-chat.service";
-export { customerIdentityService } from "@/services/support-chat/customer-identity.service";
+export { supportChatService, type CursorPaginatedResult } from "@/services/support-chat/support-chat.service";
 export type {
   AiConversationState,
   AiModeConfig,
-  Conversation,
+  ConversationDetail,
+  ConversationListTab,
+  ConversationLifecycle,
   ConversationMessage,
   ConversationPriority,
+  ConversationReasonSuggestion,
   ConversationStatus,
-  CustomerIdentity,
-  CustomerIdentityKind,
-  HandoverRequest,
-  MessageSender,
-  SupportAgent,
+  ConversationType,
+  HandoverInvitation,
+  MessageFormat,
+  MessageSenderType,
+  MessageType,
+  QueueConversationItem,
 } from "@/services/support-chat/support-chat.types";
