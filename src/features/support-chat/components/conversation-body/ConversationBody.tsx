@@ -1,11 +1,10 @@
 "use client";
 
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { ArrowDown, Loader2 } from "lucide-react";
+import { ArrowDown } from "lucide-react";
 import { Button, SkeletonList } from "@novacore/frontend-next-shadcn";
 
 import { MessageBubble } from "@/features/support-chat/components/conversation-body/MessageBubble";
-import { useMessageHistoryQuery } from "@/features/support-chat/api/support-chat.queries";
 import type { ConversationMessage } from "@/services/support-chat";
 
 const GROUP_WINDOW_MS = 5 * 60_000;
@@ -15,17 +14,18 @@ function shouldShowSender(messages: ConversationMessage[], index: number) {
   const current = messages[index];
   const previous = messages[index - 1];
   if (!previous) return true;
-  if (previous.sender !== current.sender || previous.senderName !== current.senderName) return true;
-  return new Date(current.sentAt).getTime() - new Date(previous.sentAt).getTime() > GROUP_WINDOW_MS;
+  if (previous.senderType !== current.senderType || previous.senderUserId !== current.senderUserId) return true;
+  return new Date(current.createdAt).getTime() - new Date(previous.createdAt).getTime() > GROUP_WINDOW_MS;
 }
 
-export function ConversationBody({ conversationId }: { conversationId: string }) {
-  const query = useMessageHistoryQuery(conversationId);
-  const messages = query.data?.pages.flatMap((page) => page.items) ?? [];
-
+/**
+ * No "load older messages" affordance — Chat Service has no REST message-history endpoint, only
+ * `ChatHub.RecoverMessages` (capped at 200, see `useConversationDetailPane`'s doc comment), so
+ * there is nothing further back to fetch. A conversation past that cap simply has no way to show
+ * anything older right now; that's a backend gap, not something this component works around.
+ */
+export function ConversationBody({ conversationId, messages, isLoading, myMessageIds }: { conversationId: string; messages: ConversationMessage[]; isLoading: boolean; myMessageIds: Set<string> }) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const topSentinelRef = useRef<HTMLDivElement>(null);
-  const prevScrollHeightRef = useRef<number | null>(null);
   const prevMessageCountRef = useRef(0);
   const isFirstLoadRef = useRef(true);
   const [hasNewBelow, setHasNewBelow] = useState(false);
@@ -36,24 +36,6 @@ export function ConversationBody({ conversationId }: { conversationId: string })
     setHasNewBelow(false);
   }, [conversationId]);
 
-  useEffect(() => {
-    const node = topSentinelRef.current;
-    const container = containerRef.current;
-    if (!node || !container) return;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0]?.isIntersecting && query.hasPreviousPage && !query.isFetchingPreviousPage) {
-          prevScrollHeightRef.current = container.scrollHeight;
-          void query.fetchPreviousPage();
-        }
-      },
-      { root: container, threshold: 0 },
-    );
-    observer.observe(node);
-    return () => observer.disconnect();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [query.hasPreviousPage, query.isFetchingPreviousPage, query.fetchPreviousPage, conversationId]);
-
   useLayoutEffect(() => {
     const container = containerRef.current;
     if (!container) return;
@@ -61,9 +43,6 @@ export function ConversationBody({ conversationId }: { conversationId: string })
     if (isFirstLoadRef.current && messages.length > 0) {
       container.scrollTop = container.scrollHeight;
       isFirstLoadRef.current = false;
-    } else if (prevScrollHeightRef.current !== null) {
-      container.scrollTop += container.scrollHeight - prevScrollHeightRef.current;
-      prevScrollHeightRef.current = null;
     } else if (messages.length > prevMessageCountRef.current) {
       const distanceFromBottom = container.scrollHeight - container.scrollTop - container.clientHeight;
       if (distanceFromBottom < NEAR_BOTTOM_PX) container.scrollTop = container.scrollHeight;
@@ -82,19 +61,18 @@ export function ConversationBody({ conversationId }: { conversationId: string })
   return (
     <div className="relative min-h-0 flex-1">
       <div ref={containerRef} className="h-full overflow-y-auto px-4 py-3">
-        <div ref={topSentinelRef} className="flex justify-center py-2">
-          {query.isFetchingPreviousPage ? <Loader2 className="size-4 animate-spin text-muted-foreground" /> : null}
-        </div>
-
-        {query.isLoading ? (
+        {isLoading ? (
           <SkeletonList rows={4} />
-        ) : (
+        ) : messages.length >= 200 ? (
+          <p className="pb-2 text-center text-[11px] text-muted-foreground">Showing the most recent 200 messages — earlier history isn&apos;t available yet.</p>
+        ) : null}
+        {!isLoading ? (
           <div className="flex flex-col gap-1.5">
             {messages.map((message, index) => (
-              <MessageBubble key={message.id} message={message} showSender={shouldShowSender(messages, index)} />
+              <MessageBubble key={message.id} message={message} isMine={myMessageIds.has(message.id)} showSender={shouldShowSender(messages, index)} />
             ))}
           </div>
-        )}
+        ) : null}
       </div>
 
       {hasNewBelow ? (

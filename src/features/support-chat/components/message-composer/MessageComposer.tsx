@@ -8,9 +8,25 @@ import { Button, Textarea, Tooltip } from "@novacore/frontend-next-shadcn";
 /**
  * Text-only today, but the slots for attachments/emoji are already here so the composer doesn't
  * need a redesign once those exist — they're visibly present (discoverable), just inert (no fake
- * upload API).
+ * upload API). `onTyping`/`onStopTyping` drive `ChatHub.StartTyping`/`StopTyping` — optional so
+ * the guest widget (which never connects to the hub) can reuse this same component later if
+ * needed without wiring anything.
  */
-export function MessageComposer({ disabled, disabledReason, onSend, isSending }: { disabled?: boolean; disabledReason?: string; onSend: (body: string) => void; isSending: boolean }) {
+export function MessageComposer({
+  disabled,
+  disabledReason,
+  onSend,
+  isSending,
+  onTyping,
+  onStopTyping,
+}: {
+  disabled?: boolean;
+  disabledReason?: string;
+  onSend: (body: string) => void;
+  isSending: boolean;
+  onTyping?: () => void;
+  onStopTyping?: () => void;
+}) {
   const [draft, setDraft] = useState("");
 
   function submit() {
@@ -18,6 +34,7 @@ export function MessageComposer({ disabled, disabledReason, onSend, isSending }:
     if (!trimmed || disabled) return;
     onSend(trimmed);
     setDraft("");
+    onStopTyping?.();
   }
 
   function handleKeyDown(event: KeyboardEvent<HTMLTextAreaElement>) {
@@ -47,7 +64,12 @@ export function MessageComposer({ disabled, disabledReason, onSend, isSending }:
         </Tooltip>
         <Textarea
           value={draft}
-          onChange={(event) => setDraft(event.target.value)}
+          onChange={(event) => {
+            setDraft(event.target.value);
+            if (event.target.value.trim()) onTyping?.();
+            else onStopTyping?.();
+          }}
+          onBlur={() => onStopTyping?.()}
           onKeyDown={handleKeyDown}
           placeholder={disabled ? "You can't reply here" : "Type a message… (Enter to send, Shift+Enter for a new line)"}
           disabled={disabled}

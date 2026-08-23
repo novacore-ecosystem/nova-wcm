@@ -5,8 +5,8 @@ import { Badge } from "@novacore/frontend-next-shadcn";
 import type { ConversationPriority } from "@/services/support-chat";
 
 const PRIORITY_CONFIG: Record<ConversationPriority, { label: string; variant: "outline" | "info" | "warning" | "destructive" }> = {
+  low: { label: "Low", variant: "outline" },
   normal: { label: "Normal", variant: "outline" },
-  important: { label: "Important", variant: "info" },
   high: { label: "High", variant: "warning" },
   urgent: { label: "Urgent", variant: "destructive" },
 };

@@ -6,34 +6,37 @@ import { EmptyState, ErrorState, LoadingState } from "@novacore/frontend-next-sh
 import { ConversationHeader } from "@/features/support-chat/components/conversation-header/ConversationHeader";
 import { ConversationBody } from "@/features/support-chat/components/conversation-body/ConversationBody";
 import { MessageComposer } from "@/features/support-chat/components/message-composer/MessageComposer";
-import { HandoverDialog } from "@/features/support-chat/components/handover/HandoverDialog";
 import { useConversationDetailPane } from "@/features/support-chat/components/conversation-detail/useConversationDetailPane";
 
-function composerDisabledReason(conversation: { status: string; assignedAgentName?: string }, isOwnedByMe: boolean): string | undefined {
-  if (conversation.status === "closed") return "This conversation is closed.";
-  if (!isOwnedByMe && conversation.status === "assigned") return `Owned by ${conversation.assignedAgentName} — you can't reply here.`;
+function composerDisabledReason(needsClaim: boolean, isClosed: boolean): string | undefined {
+  if (isClosed) return "This conversation is closed.";
+  if (needsClaim) return "Claim this conversation before replying.";
   return undefined;
 }
 
-export function ConversationDetailPane({ conversationId, onAutoAssigned }: { conversationId: string | null; onAutoAssigned: (id: string) => void }) {
+export function ConversationDetailPane({ conversationId }: { conversationId: string | null }) {
   const {
     conversationQuery,
     conversation,
     isOwnedByMe,
     canReply,
+    needsClaim,
+    messages,
+    isLoadingMessages,
+    typingCount,
+    myMessageIds,
     sendMessage,
     isSending,
-    changePriority,
+    notifyTyping,
+    notifyStoppedTyping,
+    claimConversation,
+    isClaiming,
     closeConversation,
-    handoverOpen,
-    setHandoverOpen,
-    submitHandover,
-    isSubmittingHandover,
-    agents,
+    isClosing,
+    aiMode,
     enableAiMode,
     disableAiMode,
-    isSavingAiMode,
-  } = useConversationDetailPane(conversationId, onAutoAssigned);
+  } = useConversationDetailPane(conversationId);
 
   if (!conversationId) {
     return (
@@ -51,16 +54,25 @@ export function ConversationDetailPane({ conversationId, onAutoAssigned }: { con
       <ConversationHeader
         conversation={conversation}
         isOwnedByMe={isOwnedByMe}
-        onChangePriority={changePriority}
-        onRequestHandover={() => setHandoverOpen(true)}
+        needsClaim={needsClaim}
+        onClaim={claimConversation}
+        isClaiming={isClaiming}
         onClose={closeConversation}
+        isClosing={isClosing}
+        aiMode={aiMode}
         onEnableAiMode={enableAiMode}
         onDisableAiMode={disableAiMode}
-        isSavingAiMode={isSavingAiMode}
       />
-      <ConversationBody conversationId={conversation.id} />
-      <MessageComposer disabled={!canReply} disabledReason={composerDisabledReason(conversation, isOwnedByMe)} onSend={sendMessage} isSending={isSending} />
-      <HandoverDialog open={handoverOpen} onOpenChange={setHandoverOpen} agents={agents.filter((agent) => agent.id !== conversation.assignedAgentId)} onSubmit={submitHandover} isSubmitting={isSubmittingHandover} />
+      <ConversationBody conversationId={conversation.id} messages={messages} isLoading={isLoadingMessages} myMessageIds={myMessageIds} />
+      {typingCount > 0 ? <p className="px-4 pb-1 text-xs italic text-muted-foreground">Someone is typing…</p> : null}
+      <MessageComposer
+        disabled={!canReply}
+        disabledReason={composerDisabledReason(needsClaim, conversation.status === "closed")}
+        onSend={sendMessage}
+        isSending={isSending}
+        onTyping={notifyTyping}
+        onStopTyping={notifyStoppedTyping}
+      />
     </div>
   );
 }
