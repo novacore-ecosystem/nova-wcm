@@ -83,7 +83,7 @@ export const navigationConfig: NavigationConfig = [
     title: "Content",
     collapsible: true,
     items: [
-      { id: "articles", label: "Articles", href: "/content/articles", permission: Permissions.Root, icon: <Newspaper className="h-4 w-4" /> },
+      { id: "articles", label: "All content", href: "/content/articles", permission: Permissions.Root, icon: <Newspaper className="h-4 w-4" /> },
       {
         id: "content-categories",
         label: "Categories",
