@@ -12,6 +12,103 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@codexteam/icons@npm:^0.0.5":
+  version: 0.0.5
+  resolution: "@codexteam/icons@npm:0.0.5"
+  checksum: 10c0/5f73f137a65a17959d758a80a3b3846801475a9555791a13561b4a2fcb57664bb7a667b6c27ea1da6f9d462b5b0657b2c35164928ad6c0a10b7e4737ddd79104
+  languageName: node
+  linkType: hard
+
+"@codexteam/icons@npm:^0.3.2":
+  version: 0.3.3
+  resolution: "@codexteam/icons@npm:0.3.3"
+  checksum: 10c0/336245f38a2b2a53626a552a5f0f32c822ee1265be6827670ba157c9fa101cb23e6c75e625aa067e4577c2d805e261f4ffcb61097ea94c034c0a3c0cae7d7271
+  languageName: node
+  linkType: hard
+
+"@editorjs/caret@npm:^1.0.1":
+  version: 1.1.0
+  resolution: "@editorjs/caret@npm:1.1.0"
+  dependencies:
+    "@editorjs/dom": "npm:^1.1.0"
+  checksum: 10c0/3f9864d520ebf8bf165d019a1b4174cc5dc489cae6b555b96c89af8dec185ab3726a913e2ca1672cc1e9cf104d15f6f75ce7af3298f5d3bdccaedd3d57313159
+  languageName: node
+  linkType: hard
+
+"@editorjs/dom@npm:^0.0.5":
+  version: 0.0.5
+  resolution: "@editorjs/dom@npm:0.0.5"
+  dependencies:
+    "@editorjs/helpers": "npm:^0.0.4"
+  checksum: 10c0/3618980264104d41fc1ad5472ec00cbb09c9294bd0b0632599fc3547951336c1b012128f0c7525d35599c6627d6963e67abf730d0819ae1502cd5d5800bd4afc
+  languageName: node
+  linkType: hard
+
+"@editorjs/dom@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "@editorjs/dom@npm:1.1.0"
+  dependencies:
+    "@editorjs/helpers": "npm:^1.2.0"
+  checksum: 10c0/49d3cec40c2a9fde3ca967fca59075be4dde387041542b7724cfa3450cae6b5572193b2b536730725f52390d75bb3074bf6f6528b445a642d3ee82a8fe47b9a6
+  languageName: node
+  linkType: hard
+
+"@editorjs/editorjs@npm:^2.30.7, @editorjs/editorjs@npm:^2.31.6":
+  version: 2.31.6
+  resolution: "@editorjs/editorjs@npm:2.31.6"
+  dependencies:
+    "@editorjs/caret": "npm:^1.0.1"
+    codex-notifier: "npm:^1.1.2"
+    codex-tooltip: "npm:^1.0.5"
+  checksum: 10c0/4377935064f73a65a06794abcaabfbb29838c9b331c01cc4459ba98fd1db8b9074035fff7fa40dc08c27bc5b82154f5a7bcf9496ac08304c7cbb88a224efd921
+  languageName: node
+  linkType: hard
+
+"@editorjs/header@npm:^2.8.9":
+  version: 2.8.9
+  resolution: "@editorjs/header@npm:2.8.9"
+  dependencies:
+    "@codexteam/icons": "npm:^0.0.5"
+    "@editorjs/editorjs": "npm:^2.30.7"
+  checksum: 10c0/a686b400103609c3d8099b3e793fa31b2e725e48344978858f0ce5e8645dbadb1c269e0aa3bd6e51d1e7bf1ab9405f739b53ce4f4c4c5251e10436d4ad477464
+  languageName: node
+  linkType: hard
+
+"@editorjs/helpers@npm:^0.0.4":
+  version: 0.0.4
+  resolution: "@editorjs/helpers@npm:0.0.4"
+  checksum: 10c0/fe6993119313166a9d5e91ea399f3ae3551db049026b218ab177d39154d64ea8d6f6e95fa29ae64756e2b74208e74dd0d89197610143be48aed3aa60465177cf
+  languageName: node
+  linkType: hard
+
+"@editorjs/helpers@npm:^1.2.0":
+  version: 1.2.2
+  resolution: "@editorjs/helpers@npm:1.2.2"
+  dependencies:
+    codex-tooltip: "npm:^1.0.6"
+  checksum: 10c0/b76604a28a28ef520684222905517fa0456377feab82660e9b3b8937a760f7ca659dedc69cf2fc91137f6fccc7a4b185ad241230675d55fe62adf0ba288dbaf2
+  languageName: node
+  linkType: hard
+
+"@editorjs/list@npm:^2.0.9":
+  version: 2.0.9
+  resolution: "@editorjs/list@npm:2.0.9"
+  dependencies:
+    "@codexteam/icons": "npm:^0.3.2"
+  checksum: 10c0/f627af2e1bbf403c3f7669bd2d23b917f1d55430d9faabd732cf5457635cd98432d0ff53722dc949597822408606288643af3d86d3ffe0b40e0cc4188916559e
+  languageName: node
+  linkType: hard
+
+"@editorjs/quote@npm:^2.7.6":
+  version: 2.7.6
+  resolution: "@editorjs/quote@npm:2.7.6"
+  dependencies:
+    "@codexteam/icons": "npm:^0.3.2"
+    "@editorjs/dom": "npm:^0.0.5"
+  checksum: 10c0/7e47c32589fe5bfbf4808ed5153d465d01c35428f5aa549267cad86f8710365167a3c113f0dcbf954629b31436d453832e5ff88e30ed5643faae64c5e34b5d73
+  languageName: node
+  linkType: hard
+
 "@emnapi/core@npm:1.10.0":
   version: 1.10.0
   resolution: "@emnapi/core@npm:1.10.0"
@@ -703,23 +800,23 @@ __metadata:
 
 "@novacore/frontend-foundation@file:../../../frontend-foundation::locator=%40novacore%2Ffrontend-next-shadcn%40file%3A..%2Fcommon%2Ffrontend-nextjs%2Fpackages%2Fshadcn%23..%2Fcommon%2Ffrontend-nextjs%2Fpackages%2Fshadcn%3A%3Ahash%3D51b547%26locator%3D%2540novacore%252Fnova-wcm%2540workspace%253A.":
   version: 0.1.0
-  resolution: "@novacore/frontend-foundation@file:../../../frontend-foundation#../../../frontend-foundation::hash=2f5309&locator=%40novacore%2Ffrontend-next-shadcn%40file%3A..%2Fcommon%2Ffrontend-nextjs%2Fpackages%2Fshadcn%23..%2Fcommon%2Ffrontend-nextjs%2Fpackages%2Fshadcn%3A%3Ahash%3D51b547%26locator%3D%2540novacore%252Fnova-wcm%2540workspace%253A."
+  resolution: "@novacore/frontend-foundation@file:../../../frontend-foundation#../../../frontend-foundation::hash=529689&locator=%40novacore%2Ffrontend-next-shadcn%40file%3A..%2Fcommon%2Ffrontend-nextjs%2Fpackages%2Fshadcn%23..%2Fcommon%2Ffrontend-nextjs%2Fpackages%2Fshadcn%3A%3Ahash%3D51b547%26locator%3D%2540novacore%252Fnova-wcm%2540workspace%253A."
   dependencies:
     "@microsoft/signalr": "npm:^8.0.7"
     axios: "npm:^1.7.9"
     libphonenumber-js: "npm:^1.13.10"
-  checksum: 10c0/b00c49db6748689e8bc59b3f897787847f812deeaeeb6f059ab69cd4330e25c9139004f3864c7f69f771bb2526325317c3c68cb4fc7378e245cad39cfb9dfa77
+  checksum: 10c0/e4e748370a42f8848fbfc0b9073ea13fd5d78fe79b1b5324b61bb77567e4936df57bf23d5d96c0f30b6b976e062c7639ddf3a4e1e163a9138a89af88b0d4ccf5
   languageName: node
   linkType: hard
 
 "@novacore/frontend-foundation@file:../common/frontend-foundation::locator=%40novacore%2Fnova-wcm%40workspace%3A.":
   version: 0.1.0
-  resolution: "@novacore/frontend-foundation@file:../common/frontend-foundation#../common/frontend-foundation::hash=2f5309&locator=%40novacore%2Fnova-wcm%40workspace%3A."
+  resolution: "@novacore/frontend-foundation@file:../common/frontend-foundation#../common/frontend-foundation::hash=529689&locator=%40novacore%2Fnova-wcm%40workspace%3A."
   dependencies:
     "@microsoft/signalr": "npm:^8.0.7"
     axios: "npm:^1.7.9"
     libphonenumber-js: "npm:^1.13.10"
-  checksum: 10c0/b00c49db6748689e8bc59b3f897787847f812deeaeeb6f059ab69cd4330e25c9139004f3864c7f69f771bb2526325317c3c68cb4fc7378e245cad39cfb9dfa77
+  checksum: 10c0/e4e748370a42f8848fbfc0b9073ea13fd5d78fe79b1b5324b61bb77567e4936df57bf23d5d96c0f30b6b976e062c7639ddf3a4e1e163a9138a89af88b0d4ccf5
   languageName: node
   linkType: hard
 
@@ -759,8 +856,13 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@novacore/nova-wcm@workspace:."
   dependencies:
+    "@editorjs/editorjs": "npm:^2.31.6"
+    "@editorjs/header": "npm:^2.8.9"
+    "@editorjs/list": "npm:^2.0.9"
+    "@editorjs/quote": "npm:^2.7.6"
     "@eslint/eslintrc": "npm:^3.2.0"
     "@hookform/resolvers": "npm:^5.7.1"
+    "@microsoft/signalr": "npm:^8.0.7"
     "@novacore/frontend-foundation": "file:../common/frontend-foundation"
     "@novacore/frontend-next-shadcn": "file:../common/frontend-nextjs/packages/shadcn"
     "@tanstack/react-query": "npm:^5.65.0"
@@ -2890,6 +2992,20 @@ __metadata:
     react: ^18 || ^19 || ^19.0.0-rc
     react-dom: ^18 || ^19 || ^19.0.0-rc
   checksum: 10c0/5605ac4396ec9bc65c82f954da19dd89a0636a54026df72780e2470da1381f9d57434a80a53f2d57eaa4e759660a3ebba9232b74258dc09970576591eae03116
+  languageName: node
+  linkType: hard
+
+"codex-notifier@npm:^1.1.2":
+  version: 1.1.2
+  resolution: "codex-notifier@npm:1.1.2"
+  checksum: 10c0/fef16977cdc067802004a29f3e52862f28a2821e7079c716ba27a8d51b218e566201a560614d54d3d4ea9c8ece3ffe49304ec9df38cde75da551db32afc508c8
+  languageName: node
+  linkType: hard
+
+"codex-tooltip@npm:^1.0.5, codex-tooltip@npm:^1.0.6":
+  version: 1.0.6
+  resolution: "codex-tooltip@npm:1.0.6"
+  checksum: 10c0/ec7488795aafbb004382899b51170190fc13ec2723004355a44e0bc50402325585108b9ef9825a7e6a6dff30e4e9edab8c93a3fe95cb2583e15f89630528676f
   languageName: node
   linkType: hard
 
