@@ -1,5 +1,5 @@
-import { ArticleWorkspace } from "@/features/article";
+import { ContentWorkspace } from "@/features/content/components/ContentWorkspace";
 
 export default function Page() {
-  return <ArticleWorkspace />;
+  return <ContentWorkspace />;
 }

@@ -1,6 +1,6 @@
-import { ArticleWorkspace } from "@/features/article";
+import { ContentWorkspace } from "@/features/content/components/ContentWorkspace";
 
 export default async function Page({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  return <ArticleWorkspace articleId={id} />;
+  return <ContentWorkspace contentId={id} />;
 }
