@@ -2,7 +2,7 @@
   "folders": [
     {
       "name": "nova-wcm",
-      "path": ".."
+      "path": "../.."
     },
     {
       "name": "@novacore/frontend-foundation",
