@@ -24,6 +24,7 @@ import { useSidebarPreferences } from "@/shared/layout/useSidebarPreferences";
 import { NO_PERMISSIONS, useSessionStore } from "@/shared/stores/session.store";
 import { useLogoutMutation } from "@/features/auth";
 import { useAppTranslation, useLocale } from "@/shared/i18n";
+import { NotificationBell } from "@/features/notifications";
 
 function ShellLogo() {
   const { t } = useAppTranslation();
@@ -151,6 +152,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
   const header = (
     <AdminHeader
       localeSwitcher={<ShellLocaleSwitcher />}
+      notifications={<NotificationBell />}
       actions={<ShellHelpButton onOpen={() => setAboutOpen(true)} />}
       userMenu={
         <UserProfile

@@ -1,4 +1,4 @@
-import type { NotificationEvent, NotificationPriority, NotificationStatus } from "@/services/notification/notification.types";
+import type { NotificationEvent, NotificationPriority, NotificationStatus, UserNotificationDetail, UserNotificationSummary } from "@/services/notification/notification.types";
 
 /**
  * Notification.API returns Notification.Domain's enums as their raw numeric ordinal (no
@@ -39,5 +39,59 @@ export function mapNotification(raw: RawNotificationDto): NotificationEvent {
     priority: mapEnum(NOTIFICATION_PRIORITY, raw.priority, "normal"),
     status: mapEnum(NOTIFICATION_STATUS, raw.status, "unread"),
     expiredAt: raw.expiredAt,
+  };
+}
+
+export interface RawUserNotificationSummaryResponse {
+  id: string;
+  category: string;
+  type: string;
+  title: string;
+  priority: number;
+  status: number;
+  createdAt: string;
+}
+
+export function mapUserNotificationSummary(raw: RawUserNotificationSummaryResponse): UserNotificationSummary {
+  return {
+    id: raw.id,
+    category: raw.category,
+    type: raw.type,
+    title: raw.title,
+    priority: mapEnum(NOTIFICATION_PRIORITY, raw.priority, "normal"),
+    status: mapEnum(NOTIFICATION_STATUS, raw.status, "unread"),
+    createdAt: raw.createdAt,
+  };
+}
+
+export interface RawGetUserNotificationResponse {
+  id: string;
+  userId: string;
+  category: string;
+  type: string;
+  title: string;
+  body: string;
+  priority: number;
+  status: number;
+  readAt?: string | null;
+  expiredAt?: string | null;
+  campaignId?: string | null;
+  createdAt: string;
+}
+
+export function mapUserNotificationDetail(raw: RawGetUserNotificationResponse): UserNotificationDetail {
+  return {
+    id: raw.id,
+    userId: raw.userId,
+    category: raw.category,
+    type: raw.type,
+    title: raw.title,
+    body: raw.body,
+    priority: mapEnum(NOTIFICATION_PRIORITY, raw.priority, "normal"),
+    status: mapEnum(NOTIFICATION_STATUS, raw.status, "unread"),
+    readAt: raw.readAt ?? undefined,
+    expiredAt: raw.expiredAt ?? undefined,
+    campaignId: raw.campaignId ?? undefined,
+    createdAt: raw.createdAt,
   };
 }

@@ -18,3 +18,27 @@ export interface NotificationEvent {
   status: NotificationStatus;
   expiredAt: string;
 }
+
+/**
+ * `UserNotificationSummaryResponse` verbatim (`GET /user-notifications/me`) — the Notification
+ * Center list item. No body/content here (only `GetUserNotificationResponse` — see
+ * `UserNotificationDetail` — has it); this is deliberately thin for a list row.
+ */
+export interface UserNotificationSummary {
+  id: string;
+  category: string;
+  type: string;
+  title: string;
+  priority: NotificationPriority;
+  status: NotificationStatus;
+  createdAt: string;
+}
+
+/** `GetUserNotificationResponse` verbatim (`GET /user-notifications/{id}`) — the full record, used for the detail view. */
+export interface UserNotificationDetail extends UserNotificationSummary {
+  userId: string;
+  body: string;
+  readAt?: string;
+  expiredAt?: string;
+  campaignId?: string;
+}
