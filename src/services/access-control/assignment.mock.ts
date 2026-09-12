@@ -75,8 +75,23 @@ export const permissionAssignmentStore = {
     await simulateLatency(undefined, 80, 200);
     return [...(assignments.get(key(subjectType, subjectId)) ?? [])];
   },
-  async set(subjectType: AccessControlSubjectType, subjectId: string, permissionIds: string[]): Promise<void> {
-    assignments.set(key(subjectType, subjectId), [...permissionIds]);
+  /**
+   * Applies an explicit `{ grant, revoke }` delta — never a full replacement — matching the shared
+   * package's `PermissionAssignmentService.assignPermissions` contract (see
+   * `@novacore/frontend-next-shadcn/docs/access-control.md`'s "Grant/revoke semantics"). Anything
+   * this subject holds outside `grant`/`revoke` (e.g. seeded permissions no caller mentioned) is
+   * left untouched by construction — there is no "diff the full list" step here at all.
+   */
+  async mutate(
+    subjectType: AccessControlSubjectType,
+    subjectId: string,
+    { grant, revoke }: { grant: string[]; revoke: string[] },
+  ): Promise<void> {
+    const mapKey = key(subjectType, subjectId);
+    const current = new Set(assignments.get(mapKey) ?? []);
+    for (const id of revoke) current.delete(id);
+    for (const id of grant) current.add(id);
+    assignments.set(mapKey, [...current]);
     await simulateLatency(undefined, 120, 280);
   },
   /** Sync read used by role/position list mapping to compute `permissionCount` without an extra await per row. */

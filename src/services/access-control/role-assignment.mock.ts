@@ -29,8 +29,17 @@ export const roleAssignmentStore = {
     await simulateLatency(undefined, 80, 200);
     return [...(roleAssignments.get(key(subjectType, subjectId)) ?? [])];
   },
-  async set(subjectType: AccessControlSubjectType, subjectId: string, roleIds: string[]): Promise<void> {
-    roleAssignments.set(key(subjectType, subjectId), [...roleIds]);
+  /** Applies an explicit `{ grant, revoke }` delta — see `permissionAssignmentStore.mutate`'s doc comment; same contract, same rationale. */
+  async mutate(
+    subjectType: AccessControlSubjectType,
+    subjectId: string,
+    { grant, revoke }: { grant: string[]; revoke: string[] },
+  ): Promise<void> {
+    const mapKey = key(subjectType, subjectId);
+    const current = new Set(roleAssignments.get(mapKey) ?? []);
+    for (const id of revoke) current.delete(id);
+    for (const id of grant) current.add(id);
+    roleAssignments.set(mapKey, [...current]);
     await simulateLatency(undefined, 120, 280);
   },
   remove(subjectType: AccessControlSubjectType, subjectId: string): void {

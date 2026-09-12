@@ -102,8 +102,8 @@ const assignments: AccessControlServices["assignments"] = {
     const permissionIds = await permissionAssignmentStore.get(subjectType, subjectId);
     return { permissionIds };
   },
-  async assignPermissions(subjectType, subjectId, permissionIds) {
-    await permissionAssignmentStore.set(subjectType, subjectId, permissionIds);
+  async assignPermissions(subjectType, subjectId, mutation) {
+    await permissionAssignmentStore.mutate(subjectType, subjectId, mutation);
   },
 };
 
@@ -111,8 +111,8 @@ const roleAssignments: AccessControlServices["roleAssignments"] = {
   async getAssignedRoleIds(subjectType, subjectId) {
     return roleAssignmentStore.get(subjectType, subjectId);
   },
-  async assignRoles(subjectType, subjectId, roleIds) {
-    await roleAssignmentStore.set(subjectType, subjectId, roleIds);
+  async assignRoles(subjectType, subjectId, mutation) {
+    await roleAssignmentStore.mutate(subjectType, subjectId, mutation);
   },
 };
 
