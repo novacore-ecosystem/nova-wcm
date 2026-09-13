@@ -3,3 +3,4 @@ export { positionCollection, type MockPosition } from "@/services/access-control
 export { permissionAssignmentStore } from "@/services/access-control/assignment.mock";
 export { roleAssignmentStore } from "@/services/access-control/role-assignment.mock";
 export { subjectCollection, type MockSubject } from "@/services/access-control/subject.mock";
+export { auditLogStore, type MockAuditLogEntry } from "@/services/access-control/audit-log.mock";

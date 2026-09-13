@@ -798,31 +798,31 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@novacore/frontend-foundation@file:../../../frontend-foundation::locator=%40novacore%2Ffrontend-next-shadcn%40file%3A..%2Fcommon%2Ffrontend-nextjs%2Fpackages%2Fshadcn%23..%2Fcommon%2Ffrontend-nextjs%2Fpackages%2Fshadcn%3A%3Ahash%3D51460e%26locator%3D%2540novacore%252Fnova-wcm%2540workspace%253A.":
+"@novacore/frontend-foundation@file:../../../frontend-foundation::locator=%40novacore%2Ffrontend-next-shadcn%40file%3A..%2Fcommon%2Ffrontend-nextjs%2Fpackages%2Fshadcn%23..%2Fcommon%2Ffrontend-nextjs%2Fpackages%2Fshadcn%3A%3Ahash%3Dafe900%26locator%3D%2540novacore%252Fnova-wcm%2540workspace%253A.":
   version: 0.1.0
-  resolution: "@novacore/frontend-foundation@file:../../../frontend-foundation#../../../frontend-foundation::hash=529689&locator=%40novacore%2Ffrontend-next-shadcn%40file%3A..%2Fcommon%2Ffrontend-nextjs%2Fpackages%2Fshadcn%23..%2Fcommon%2Ffrontend-nextjs%2Fpackages%2Fshadcn%3A%3Ahash%3D51460e%26locator%3D%2540novacore%252Fnova-wcm%2540workspace%253A."
+  resolution: "@novacore/frontend-foundation@file:../../../frontend-foundation#../../../frontend-foundation::hash=3c9b9a&locator=%40novacore%2Ffrontend-next-shadcn%40file%3A..%2Fcommon%2Ffrontend-nextjs%2Fpackages%2Fshadcn%23..%2Fcommon%2Ffrontend-nextjs%2Fpackages%2Fshadcn%3A%3Ahash%3Dafe900%26locator%3D%2540novacore%252Fnova-wcm%2540workspace%253A."
   dependencies:
     "@microsoft/signalr": "npm:^8.0.7"
     axios: "npm:^1.7.9"
     libphonenumber-js: "npm:^1.13.10"
-  checksum: 10c0/e4e748370a42f8848fbfc0b9073ea13fd5d78fe79b1b5324b61bb77567e4936df57bf23d5d96c0f30b6b976e062c7639ddf3a4e1e163a9138a89af88b0d4ccf5
+  checksum: 10c0/3babaf663c66b23c9b4e2d7a01c3ef90b784d42b5b192ff65b91b095de5303b84d0356e7cd64a7aa78ce6e6b4b89612398fb851f59239d340ad6d97d06b60824
   languageName: node
   linkType: hard
 
 "@novacore/frontend-foundation@file:../common/frontend-foundation::locator=%40novacore%2Fnova-wcm%40workspace%3A.":
   version: 0.1.0
-  resolution: "@novacore/frontend-foundation@file:../common/frontend-foundation#../common/frontend-foundation::hash=529689&locator=%40novacore%2Fnova-wcm%40workspace%3A."
+  resolution: "@novacore/frontend-foundation@file:../common/frontend-foundation#../common/frontend-foundation::hash=3c9b9a&locator=%40novacore%2Fnova-wcm%40workspace%3A."
   dependencies:
     "@microsoft/signalr": "npm:^8.0.7"
     axios: "npm:^1.7.9"
     libphonenumber-js: "npm:^1.13.10"
-  checksum: 10c0/e4e748370a42f8848fbfc0b9073ea13fd5d78fe79b1b5324b61bb77567e4936df57bf23d5d96c0f30b6b976e062c7639ddf3a4e1e163a9138a89af88b0d4ccf5
+  checksum: 10c0/3babaf663c66b23c9b4e2d7a01c3ef90b784d42b5b192ff65b91b095de5303b84d0356e7cd64a7aa78ce6e6b4b89612398fb851f59239d340ad6d97d06b60824
   languageName: node
   linkType: hard
 
 "@novacore/frontend-next-shadcn@file:../common/frontend-nextjs/packages/shadcn::locator=%40novacore%2Fnova-wcm%40workspace%3A.":
   version: 0.1.0
-  resolution: "@novacore/frontend-next-shadcn@file:../common/frontend-nextjs/packages/shadcn#../common/frontend-nextjs/packages/shadcn::hash=51460e&locator=%40novacore%2Fnova-wcm%40workspace%3A."
+  resolution: "@novacore/frontend-next-shadcn@file:../common/frontend-nextjs/packages/shadcn#../common/frontend-nextjs/packages/shadcn::hash=afe900&locator=%40novacore%2Fnova-wcm%40workspace%3A."
   dependencies:
     "@novacore/frontend-foundation": "file:../../../frontend-foundation"
     "@radix-ui/react-avatar": "npm:^1.1.2"
@@ -848,7 +848,7 @@ __metadata:
     next: ^14.0.0 || ^15.0.0
     react: ^18.3.0 || ^19.0.0
     react-dom: ^18.3.0 || ^19.0.0
-  checksum: 10c0/d54951230375a252923afa056bf52d9ca6b313a98c9dc19cccea05046c909963057d455a537a0502cd7105862f60f84c978e29dc975308d7dc2183d8a0a93196
+  checksum: 10c0/a6371f02e2f690e72d2bcac0a738f80b63dbe9f000cad4a475d36d339411f5654c424e1f40b0ad771525f02b71dcbad9fdf5317354b568c08e8228f253b3b3e0
   languageName: node
   linkType: hard
 

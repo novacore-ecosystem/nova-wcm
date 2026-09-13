@@ -3,6 +3,7 @@ import {
   buildPositionTree,
   type AccessControlServices,
   type AssignedPermissions,
+  type AuditLogChangeItem,
   type PositionInput,
   type PositionRecord,
   type PositionTreeNode,
@@ -11,6 +12,7 @@ import {
 } from "@novacore/frontend-next-shadcn";
 
 import {
+  auditLogStore,
   permissionAssignmentStore,
   positionCollection,
   roleAssignmentStore,
@@ -18,6 +20,31 @@ import {
   type MockPosition,
   type MockRole,
 } from "@/services/access-control";
+
+/** Mock-only display-name resolution for a permission key ("content:manage" -> "Content Manage") — a real backend would just return an already-resolved name; the mock has no i18n access at this layer (see access-control.service.ts's module doc comment). */
+function humanizePermissionKey(id: string): string {
+  return id
+    .split(/[:\-_]/)
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(" ");
+}
+
+async function toAuditLogChangeItems(permissionIds: string[]): Promise<AuditLogChangeItem[]> {
+  return permissionIds.map((id) => ({ id, displayName: humanizePermissionKey(id) }));
+}
+
+async function toAuditLogRoleItems(roleIds: string[]): Promise<AuditLogChangeItem[]> {
+  return Promise.all(
+    roleIds.map(async (id) => {
+      try {
+        const role = await roleCollection.get(id);
+        return { id, displayName: role.name };
+      } catch {
+        return { id, displayName: id };
+      }
+    }),
+  );
+}
 
 async function toRoleRecord(row: MockRole): Promise<RoleRecord> {
   const permissionIds = await permissionAssignmentStore.get("role", row.id);
@@ -104,6 +131,15 @@ const assignments: AccessControlServices["assignments"] = {
   },
   async assignPermissions(subjectType, subjectId, mutation) {
     await permissionAssignmentStore.mutate(subjectType, subjectId, mutation);
+    auditLogStore.record({
+      subjectType,
+      subjectId,
+      actorName: "Current user",
+      grantedPermissionIds: mutation.grant,
+      revokedPermissionIds: mutation.revoke,
+      grantedRoleIds: [],
+      revokedRoleIds: [],
+    });
   },
 };
 
@@ -113,6 +149,60 @@ const roleAssignments: AccessControlServices["roleAssignments"] = {
   },
   async assignRoles(subjectType, subjectId, mutation) {
     await roleAssignmentStore.mutate(subjectType, subjectId, mutation);
+    auditLogStore.record({
+      subjectType,
+      subjectId,
+      actorName: "Current user",
+      grantedPermissionIds: [],
+      revokedPermissionIds: [],
+      grantedRoleIds: mutation.grant,
+      revokedRoleIds: mutation.revoke,
+    });
+  },
+};
+
+const auditLogs: AccessControlServices["auditLogs"] = {
+  async list(subjectType, subjectId, request: CriteriaRequest) {
+    const page = request.page ?? 1;
+    const pageSize = request.pageSize ?? 10;
+    const { items, totalCount } = await auditLogStore.list(subjectType, subjectId, page, pageSize);
+    const totalPages = Math.max(1, Math.ceil(totalCount / pageSize));
+    return {
+      items: items.map((entry) => ({
+        id: entry.id,
+        changeTime: entry.changeTime,
+        actorName: entry.actorName,
+        permissionGrantedCount: entry.grantedPermissionIds.length,
+        permissionRevokedCount: entry.revokedPermissionIds.length,
+        roleGrantedCount: entry.grantedRoleIds.length,
+        roleRevokedCount: entry.revokedRoleIds.length,
+      })),
+      pageNumber: page,
+      pageSize,
+      totalCount,
+      totalPages,
+      hasNextPage: page < totalPages,
+      hasPreviousPage: page > 1,
+    };
+  },
+  async getDetail(subjectType, subjectId, entryId) {
+    const entry = await auditLogStore.getById(subjectType, subjectId, entryId);
+    if (!entry) return null;
+    const [grantedPermissions, revokedPermissions, grantedRoles, revokedRoles] = await Promise.all([
+      toAuditLogChangeItems(entry.grantedPermissionIds),
+      toAuditLogChangeItems(entry.revokedPermissionIds),
+      toAuditLogRoleItems(entry.grantedRoleIds),
+      toAuditLogRoleItems(entry.revokedRoleIds),
+    ]);
+    return {
+      id: entry.id,
+      changeTime: entry.changeTime,
+      actorName: entry.actorName,
+      grantedPermissions,
+      revokedPermissions,
+      grantedRoles,
+      revokedRoles,
+    };
   },
 };
 
@@ -122,5 +212,10 @@ const roleAssignments: AccessControlServices["roleAssignments"] = {
  * @novacore/frontend-next-shadcn/docs/access-control.md). Backed by mock collections today, same
  * as every other WCM feature (no WCM backend exists yet); swapping these objects' bodies for real
  * `httpClient` calls is the entire future migration, with zero changes required in the shared UI.
+ *
+ * `auditLogs` is mock-only in a different sense than the rest: there is no real backend contract
+ * to eventually swap in yet at all (no audit-log service exists), so `humanizePermissionKey`
+ * above is a deliberately simple stand-in for what a real backend would just return as an
+ * already-resolved display name.
  */
-export const accessControlServices: AccessControlServices = { roles, positions, assignments, roleAssignments };
+export const accessControlServices: AccessControlServices = { roles, positions, assignments, roleAssignments, auditLogs };
