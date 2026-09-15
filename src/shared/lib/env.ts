@@ -13,6 +13,14 @@ export const env = {
    */
   tenantClientKey: process.env.NEXT_PUBLIC_TENANT_CLIENT_KEY ?? "",
   /**
+   * This App's stable Code (sent as the `X-App-Key` login/register/refresh-token header —
+   * see Auth's `LoginHandler.ResolveAppAsync`). **Required** for any non-Root account (every
+   * nova-wcm user): `ResolveAppAsync` throws when the header is missing/blank unless the
+   * authenticating account is the singleton Root, which nova-wcm never logs in as. NOT the
+   * App's Guid `Id` — the App's `Code` string, resolved via `IAppCollectionCache.GetByCodeAsync`.
+   */
+  appCode: process.env.NEXT_PUBLIC_APP_CODE ?? "",
+  /**
    * `ChatHub`'s SignalR endpoint. The YARP gateway forwards hub routes at their untouched path
    * (no `/api` prefix — stripping would 404 the negotiate/connect handshake, see the gateway's
    * own `IsSignalRHub` transform), so this is derived off the gateway's bare origin plus the
