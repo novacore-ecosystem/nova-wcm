@@ -9,6 +9,7 @@ import {
   PermissionProvider,
   TenantEntitlementProvider,
   UserProfileProvider,
+  type InitialAuthState,
 } from "@novacore/frontend-next-shadcn";
 import type { Locale } from "@novacore/frontend-foundation";
 
@@ -20,10 +21,12 @@ import { useLocaleStore } from "@/shared/stores/locale.store";
 import { NO_PERMISSIONS, useSessionStore } from "@/shared/stores/session.store";
 import { accessControlServices, useTenantEntitlementQuery } from "@/features/access-control";
 import { userProfileService } from "@/features/user-profile";
+import { useEnsureBootstrap } from "@/shared/lib/bootstrap/use-ensure-bootstrap";
 
-function AppProviders({ children }: { children: ReactNode }) {
+function AppProviders({ children, initialAuthState }: { children: ReactNode; initialAuthState: InitialAuthState }) {
   const ownedPermissions = useSessionStore((state) => state.user?.permissions ?? NO_PERMISSIONS);
   const entitlement = useTenantEntitlementQuery();
+  useEnsureBootstrap(initialAuthState);
 
   return (
     <PermissionProvider permissions={ownedPermissions}>
@@ -36,7 +39,14 @@ function AppProviders({ children }: { children: ReactNode }) {
   );
 }
 
-export function Providers({ children }: { children: ReactNode }) {
+export function Providers({
+  children,
+  initialAuthState,
+}: {
+  children: ReactNode;
+  /** Computed server-side from request cookies (`RootLayout`) — drives `useEnsureBootstrap`'s guest/cache-miss decision on every route, including `(public)` pages that never mount `RequireAuth`. */
+  initialAuthState: InitialAuthState;
+}) {
   const [queryClient] = useState(createQueryClient);
   const locale = useLocaleStore((state) => state.locale);
   const setLocale = useLocaleStore((state) => state.setLocale);
@@ -53,7 +63,7 @@ export function Providers({ children }: { children: ReactNode }) {
               components (e.g. the Access Control module) read translations through this one,
               kept in lockstep with the same locale store so the LocaleSwitcher drives both. */}
           <I18nProvider locale={locale as Locale} onLocaleChange={setLocale} translations={APP_DICTIONARY}>
-            <AppProviders>{children}</AppProviders>
+            <AppProviders initialAuthState={initialAuthState}>{children}</AppProviders>
           </I18nProvider>
         </AdminProvider>
       </AppTranslationProvider>

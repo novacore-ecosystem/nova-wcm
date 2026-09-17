@@ -53,10 +53,10 @@ export function onReceiveNotification(handler: (notification: NotificationEvent)
 }
 
 /**
- * `IGlobalHubBase.BootstrapVersionChanged` — backend foundation for a future "tenant bootstrap
- * data changed, refetch" flow (see the backend's doc comment on `GlobalHub.BootstrapVersionChanged`).
- * No client-side refetch orchestration exists yet; exposed so a future feature can subscribe
- * without touching this module.
+ * `IGlobalHubBase.BootstrapVersionChanged` — pushed either to every connection in the tenant
+ * group on a live change, or to just this connection on a connect-time version mismatch (see
+ * `GlobalHub.OnConnectedAsync`'s backend doc comment). Consumed by `useRequireAuth`, which calls
+ * `bootstrapCoordinator.refreshBootstrap(version)` on every event.
  */
 export function onBootstrapVersionChanged(handler: (version: number) => void): () => void {
   const conn = getConnection();
